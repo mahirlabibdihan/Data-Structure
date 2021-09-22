@@ -1,165 +1,76 @@
-#include<iostream>
-#include<vector>
-#include<initializer_list>
-#include<iterator>
+#include <iostream>
+#include <cmath>
 using namespace std;
 
-
-template<typename T>
-class Vector
-{
+class Vector {
 private:
-    T* arr = NULL;
-    int Total_Capacity;
-    int Current_Size;
+	float x, y, z;
 public:
-    static int iterator;
-    Vector(int n)
-    {
-        arr = new T[n];
-        Total_Capacity = n;
-        Current_Size = n;
-    }
+	Vector(float x, float y, float z) {
+		this->x = x;
+		this->y = y;
+		this->z = z;
+	}
 
-    Vector()
-    {
-        arr = new T[0];
-        Total_Capacity = 0;
-        Current_Size = 0;
-    }
-    Vector(const Vector<T>& X)
-    {
-        arr = X.arr;
-        Total_Capacity = X.Total_Capacity;
-        Current_Size = X.Current_Size;
-    }
-    Vector(initializer_list<T> x)
-    {
-        int n = x.size(), i;
-        arr = new T[n];
-        typename initializer_list<T>::iterator itr;
-        for (itr = x.begin(), i = 0; itr != x.end(); itr++, i++)
-        {
-            arr[i] = *itr;
-        }
-        Total_Capacity = n;
-        Current_Size = n;
-    }
-    ~Vector()
-    {
-        delete[] arr;
-    }
-    int capacity()
-    {
-        return Total_Capacity;
-    }
-    int size()
-    {
-        return Current_Size;
-    }
-    T at(T index)
-    {
-        if (index < size())
-        {
-            return *(arr + index);
-        }
-        else
-        {
-            throw std::out_of_range("_M_range_check: __n (which is " + to_string(index) + ") >= this->size() (which is " + to_string(Current_Size) + ")");
-        }
+	float determinant() {
+		return sqrt(x * x + y * y + z * z);
+	}
 
-    }
-    T operator[](T index)
-    {
-        return *(arr + index);
-    }
+	Vector unit() {
+		int r = determinant();
+		return Vector(this->x / r, this->y / r, this->z / r);
+	}
 
-    void operator=(Vector X)
-    {
-        this->arr = X.arr;
-    }
+	Vector operator^(int v) {
+		return *this;
+	}
 
-    void push_back(T data)
-    {
-        if (Total_Capacity == Current_Size)
-        {
-            if (Total_Capacity)
-            {
-                T* temp = new T[2 * Total_Capacity];
-                for (int i = 0; i < Total_Capacity; i++)
-                {
-                    temp[i] = arr[i];
-                }
-                delete[] arr;
-                Total_Capacity *= 2;
-                arr = temp;
-            }
-            else
-            {
-                T* temp = new T[1];
-                delete[] arr;
-                Total_Capacity++;
-                arr = temp;
-            }
-            arr[Current_Size] = data;
-            Current_Size++;
-        }
-    }
-    void pop_back()
-    {
-        if (Current_Size) Current_Size--;
-    }
-    T* begin()
-    {
-        return arr;
-    }
-    T* end()
-    {
-        return arr + Current_Size;
-    }
-    bool empty()
-    {
-        return !Current_Size;
-    }
+	Vector operator+(const Vector& v) {
+		return Vector(this->x + v.x, this->y + v.y, this->z + v.z);
+	}
 
-    friend istream& operator>> (istream& is, Vector<T>& v)
-    {
-        for (auto& i : v)
-        {
-            is >> i;
-        }
-        return is;
-    }
+	Vector operator-(const Vector& v) {
+		return Vector(this->x - v.x, this->y - v.y, this->z - v.z);
+	}
 
-    friend ostream& operator<< (ostream& os, Vector<T>& v)
-    {
-        for (auto& i : v)
-        {
-            os << i << " ";
-        }
-        os << endl;
-        return os;
-    }
+	Vector operator*(const Vector& v) {
+		return Vector(this->x * v.x, this->y * v.y, this->z * v.z);
+	}
+
+	Vector operator*(int n) {
+		return Vector(this->x * n, this->y * n, this->z * n);
+	}
+
+	Vector operator^(const Vector& v) {
+		return Vector(
+		           this->y * v.z - this->z * v.y,
+		           this->z * v.x - this->x * v.z,
+		           this->x * v.y - this->y * v.x
+		       );
+	}
+
+	Vector operator/(int n) {
+		return Vector(this->x / n, this->y / n, this->z / n);
+	}
+
+	friend Vector operator*(int n, const Vector &v);
+	friend ostream& operator<<(ostream& out, const Vector& v);
+	friend istream& operator>>(istream& in, Vector &v);
 };
 
+Vector operator*(int n, const Vector &v) {
+	return Vector(v.x + v.x, v.y + v.y, v.z + v.z);
+}
+ostream& operator<<(ostream& out, const Vector& v) {
+	out << "(" << v.x << "," << v.y << "," << v.z << ")" << endl;
+	return out;
+}
 
+istream& operator>>(istream& in, Vector &v) {
+	in >> v.x >> v.y >> v.z;
+	return in;
+}
 
-
-int main()
-{
-    Vector<int> x;
-    Vector<int>::iterator ;
-    x.push_back(1);
-    x.push_back(2);
-    x.push_back(3);
-
-    Vector<int> y = {1, 2, 3, 4, 5};
-
-    // cin>>y;
-    cout << y;
-
-    int z[10];
-    return 0;
+int main() {
 
 }
-// vector::_M_range_check: __n (which is 10) >= this->size() (which is 5)
