@@ -1,3 +1,4 @@
+// Local variables are stored on the stack 
 template<typename T>
 class stack
 {

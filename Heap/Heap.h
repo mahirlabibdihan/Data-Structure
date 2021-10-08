@@ -1,0 +1,1 @@
+// Global variables are stored on the heap
