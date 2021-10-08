@@ -245,7 +245,6 @@ double evaluate(Node* root) {
     } return stod(root->data);
 }
 
-// Driver code
 int main()
 {
     cout<<"Equation: ";
