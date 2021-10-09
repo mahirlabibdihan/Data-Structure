@@ -1,82 +1,76 @@
+// Reference: http://www.btechsmartclass.com/data_structures/single-linked-list.html
 #include "SNode.h"
 using namespace std;
-class SinglyLinkedList
+class SLL
 {
 	SNode* head;
 public:
-	SinglyLinkedList()
+	SLL()
 	{
 		head = NULL;
 	}
-	/*void insert(SNode* head, int pos, int data)
+	void erase(int idx)
 	{
-		SNode *i, *j = head;
-
-		i = new SNode();
-
-		i->data = data;
-
-		if (pos == 1)
+		if(head != NULL)
 		{
-			i->next = head;
-			head = i;
-		}
-
-		else
-		{	for (int k = 1; k < pos - 1; k++)
+			SNode *temp1 = head, *temp2;
+			for(int i=0;i<idx;i++)
 			{
-				j = j->next;
+				if(temp1->next == NULL)
+				{
+					cout<<"Index out of range"<<endl;
+					return;
+				}
+				temp2 = temp1;
+				temp1 = temp1->next;
 			}
-
-			i->next = j->next;
-			j->next = i;
+			temp2->next = temp1->next;
+			delete temp1;
 		}
 	}
-
-	void erase(SNode* head, int pos)
-	{
-		SNode *i, *j = head;
-
-		if (pos == 1)
-		{
-			i = head;
-			head = head->next;
-		}
-
-		else
-		{	for (int k = 1; k < pos - 1; k++)
-			{
-				j = j->next;
-			}
-
-			i = j->next;
-			j->next = i->next;
-		}
-
-		delete i;
-	}*/
-
 	void push_front(int data)
 	{
 		SNode *newNode = new SNode(data);
 		newNode->next = head;
 		head = newNode;
 	}
-	void push_back(int data)
+	void insert(int idx, int data)
 	{
-		SNode* temp;
+		SNode *newNode = new SNode(data);
 		if(head == NULL)
 		{
-			head = new SNode(data);
+			head = newNode;
 		}
 		else
 		{
-			temp = head;
+			SNode* temp = head;
+			for(int i=0;i<idx-1;i++)
+			{
+				if(temp->next == NULL)
+				{
+					cout<<"Index out of range"<<endl;
+					return;
+				}
+				temp = temp->next;
+			}
+			temp->next = newNode;
+		}
+	}
+	void push_back(int data) 
+	{
+		SNode *newNode = new SNode(data);
+		if(head == NULL)
+		{
+			head = newNode;
+		}
+		else
+		{
+			SNode* temp = head;
 			while (temp->next != NULL)
 			{
 				temp = temp->next;
 			}
-			temp->next = new SNode(data);
+			temp->next = newNode;
 		}
 	}
 	void display()

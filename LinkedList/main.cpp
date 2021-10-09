@@ -12,4 +12,6 @@ int main()
 		list.push_front(tmp);
 	}
 	list.display();
+	list.erase(3);
+	list.display();
 }
