@@ -7,6 +7,5 @@ public:
 	DNode(int data)
 	{
 		this->data = data;
-		prev = next = NULL;
 	}
 };

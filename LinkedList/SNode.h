@@ -8,6 +8,5 @@ public:
 	SNode(int data)
 	{
 		this->data = data;
-		next = NULL;
 	}
 };

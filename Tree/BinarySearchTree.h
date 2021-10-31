@@ -4,13 +4,13 @@
 using namespace std;
 
 
-class BST:public BinaryTree
+class BST: public BinaryTree
 {
 public:
-	BST():BinaryTree()
+	BST(): BinaryTree()
 	{
 	}
-	BST(const BST& bst):BinaryTree(bst)
+	BST(const BST& bst): BinaryTree(bst)
 	{
 	}
 	BNode* search(int data)
@@ -88,8 +88,44 @@ public:
 			}
 		}
 	}
+	static BNode* getMin(BNode* root)
+	{
+		BNode* min = root;
+		while (min != NULL && min->left != NULL)
+		{
+			min = min->left;
+		}
+		return min;
+	}
+	static BNode* getMax(BNode* root)
+	{
+		BNode* max = root;
+		while (max != NULL && max->right != NULL)
+		{
+			max = max->right;
+		}
+		return max;
+	}
+	BNode* getMin()
+	{
+		BNode* min = root;
+		while (min != NULL && min->left != NULL)
+		{
+			min = min->left;
+		}
+		return min;
+	}
+	BNode* getMax()
+	{
+		BNode* max = root;
+		while (max != NULL && max->right != NULL)
+		{
+			max = max->right;
+		}
+		return max;
+	}
 	void erase(int data)
-	{		
+	{
 		if (root == NULL)
 		{
 			return;
@@ -97,7 +133,7 @@ public:
 		else
 		{
 			// Searching the node to be deleted
-			BNode* target = root, *parent;
+			BNode* target = root, *parent = NULL;
 			while (data != target->data)
 			{
 				parent = target;
@@ -127,43 +163,51 @@ public:
 
 			// Deleting target node
 			// Case-1:  Deleting a node with no child
-			if(target->left == NULL && target->right == NULL)
+			if (target->left == NULL && target->right == NULL)
 			{
-				if(target == parent->left) parent->left = NULL;
-				else parent->right = NULL;
+				if (target == root)	root = NULL;
+				else if (target == parent->left) parent->left = NULL;
+				else if (target == parent->right) parent->right = NULL;
+				// Delete the target node
+				delete target;
 			}
 			// Case-2: Deleting a node with one child
-			else if(target->left == NULL)
+			else if (target->left == NULL)
 			{
-				if(target == parent->left) parent->left = target->right;
-				else parent->right = target->right;
+				if (target == root)	root = target->right;
+				else if (target == parent->left) parent->left = target->right;
+				else if (target == parent->right) parent->right = target->right;
+				// Delete the target node
+				delete target;
 			}
-			else if(target->right == NULL)
+			else if (target->right == NULL)
 			{
-				if(target == parent->left) parent->left = target->left;
+				if (target == root)	root = target->left;
+				else if (target == parent->left) parent->left = target->left;
 				else parent->right = target->left;
+				// Delete the target node
+				delete target;
 			}
 			// Case-3: Deleting a node with two child
 			else
 			{
 				// Finding the smallest node in the right subtree of the target(Inorder Succesor)
 				// We could also used largest node of left subtree
-				BNode* inSucc = target->right, *inParent;
-				while(inSucc->left != NULL)
+				BNode* inSucc = target->right;
+				while (inSucc != NULL && inSucc->left != NULL)
 				{
 					inSucc = inSucc->left;
 				}
 
-				// Remove the succesor from its original position
-				if(inSucc == inParent->left) inParent->left = NULL;
-				else inParent->right = NULL;
+				int value = inSucc->data;
+				// Delete the successor
+				erase(value);
 
 				// Replace the target node with its succesor
-				if(target == parent->left) parent->left = inSucc;
-				else parent->right = inSucc;
+				if (target == root ) root->data = value;
+				else if (target == parent->left) parent->left->data = value;
+				else if (target == parent->right) parent->right->data = value;
 			}
-			// Delete the target node
-			delete target;
 		}
 	}
 };
