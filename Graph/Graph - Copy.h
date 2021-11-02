@@ -13,8 +13,6 @@ vector<bool> visited;
 class graph
 {
 public:
-
-
     void input(int m)
     {
         while (m--)
