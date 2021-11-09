@@ -281,6 +281,28 @@ public:
             }        
         }
     }
+    bool colorGraph(int *color,int pos,int c)
+    {
+        color[pos] = c;
+        bool ans=true;
+        for(int i:adj[pos])
+        {
+            if(!color[i])
+            {
+                ans=ans&&colorGraph(color,i,-color[pos]);
+            }
+            else if(color[i]==color[pos])
+            {
+                return false;
+            }
+        }
+        return ans;
+    }
+    bool isBipartite()
+    {
+        int *color=new int[n]();
+        return colorGraph(color,0,1);
+    }
 };
 
 // Weighted Graph
