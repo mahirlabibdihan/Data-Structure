@@ -1,5 +1,10 @@
-#include "Graph.hpp"
+#include "Graph2.hpp"
 int main()
 {
-	Graph1 g(6);
+	Graph g(6);
+	g.connect(0,1);
+	g.connect(1,2);
+	g.connect(0,2);
+
+	cout<<g.isBipartite()<<endl;
 }

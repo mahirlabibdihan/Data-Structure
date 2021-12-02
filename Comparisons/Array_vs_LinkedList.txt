@@ -1,0 +1,27 @@
+Array:
+    1. Memory allocation location = Stack
+    2. Types: 1D,2D or multidimensional
+    Pros:
+        1. Accessing element = O(1)
+        2. Binary search = O(logn)
+        3. Allocated memory = n*sizeof(data type)
+        4. Random access = Allowed
+    Cons:
+        1. Inserting element = O(n)
+        2. Deleting element = O(n)
+        3. Fixed size
+        4. Memory utilization = Inefficient
+
+LinkedList:
+    1. Memory allocation location = Heap
+    2. Types: Singly,Doubly or Circular
+    Pros:
+        1. Inserting element = O(1)
+        2. Deleting element = O(1)
+        3. Dynamic size
+        4. Memory utilization = Efficient
+    Cons:
+        1. Accessing element = O(n)
+        2. Searching = O(n)
+        3. Allocated memory = n*sizeof(data type+pointer)
+        4. Random access = Not Allowed

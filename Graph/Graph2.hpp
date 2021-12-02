@@ -4,14 +4,14 @@
 #include <climits>
 using namespace std;
 // List Representation
-class Graph2
+class Graph
 {
     vector<int> *adj;
     int *inDegree;
     bool *visited;
     int n;
 public:
-    Graph2(int n)
+    Graph(int n)
     {
         this->n = n;
         adj = new vector<int>[n];
@@ -167,7 +167,7 @@ public:
             }
             else if(color[i]==color[pos])
             {
-                return false;
+                ans=false;
             }
         }
         return ans;
