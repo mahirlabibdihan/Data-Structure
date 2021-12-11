@@ -1,3 +1,5 @@
+#ifndef __LINK__
+#define __LINK__
 // Singly linked list node
 template <typename E>
 class Link
@@ -13,3 +15,4 @@ public:
     }
     Link(Link *nextval = NULL) { next = nextval; }
 };
+#endif

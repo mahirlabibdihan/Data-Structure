@@ -26,19 +26,31 @@ private:
         delete[] listArray;
         listArray = temp;
     }
+    void rightShift()
+    {
+        for (int i = listSize; i > curr; i--) // Shift elements up
+        {
+            listArray[i] = listArray[i - 1]; // to make room
+        }
+    }
+    void leftShift()
+    {
+        for (int i = curr; i < listSize - 1; i++)
+        {
+            listArray[i] = listArray[i + 1];
+        }
+    }
 
 public:
     AList(int maxSize = defaultSize)
     { // Constructor
-        this->maxSize = maxSize;
-        chunk = maxSize;
+        chunk = this->maxSize = maxSize;
         listSize = curr = 0;
         listArray = new T[maxSize];
     }
     AList(int *arr, int listSize, int maxSize = defaultSize)
     { // Constructor
-        this->maxSize = maxSize;
-        chunk = maxSize;
+        chunk = this->maxSize = maxSize;
         this->listSize = listSize;
         curr = 0;
         listArray = new T[maxSize];
@@ -53,9 +65,7 @@ public:
     }
     void clear()
     {
-        delete[] listArray;
         listSize = curr = 0;
-        listArray = new T[defaultSize];
     }
     void insert(const T &it)
     { // Insert "it" at current position
@@ -64,13 +74,9 @@ public:
             // Reallocating memory to store more elements
             realloc(maxSize + chunk);
         }
-        for (int i = listSize; i > curr; i--) // Shift elements up
-        {
-            listArray[i] = listArray[i - 1]; // to make room
-        }
-
-        listArray[curr] = it;
-        listSize++; // Increment list size
+        rightShift();
+        listArray[curr] = it; // Inserting 'it'
+        listSize++;           // Increment list size
     }
     void append(const T &it)
     { // Append "it"
@@ -90,11 +96,10 @@ public:
             exit(-1);
         }
         T it = listArray[curr];
-        for (int i = curr; i < listSize - 1; i++)
-        {
-            listArray[i] = listArray[i + 1];
-        }
-        listSize--;
+        leftShift();
+        listSize--; // Decrement listSize
+
+        // Stepping back 'curr'
         if (curr == listSize)
         {
             if (curr != 0)
