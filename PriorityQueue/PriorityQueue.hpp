@@ -1,6 +1,6 @@
 #include <iostream>
 #include <climits>
-#include "Heap.hpp"
+#include "../Heap/Heap.hpp"
 using namespace std;
 // heap class
 template <typename E, typename Comp>

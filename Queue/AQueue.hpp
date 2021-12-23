@@ -2,15 +2,6 @@
 #define __A_QUEUE__
 #include "Queue.hpp"
 
-/*
-    0   1   2   3   4   5
-    2   3   4   5   0   1
-                ^       ^
-
-    0   1   2   3   4   5   6   7   8   9   10
-    7   8   9   10  0   1   2   3   4   5   6 
-                        ^               ^               
-*/
 // Array-based queue implementation
 template <typename E>
 class AQueue : public Queue<E>
@@ -36,24 +27,6 @@ private:
         delete[] listArray;
         listArray = tmp;
     }
-    /*void expand()
-    {
-        // Reallocating memory to store more elements
-        E *tmp = new E[2 * (maxSize - 1) + 1];
-
-        for (int i = front;; i++)
-        {
-            tmp[i] = listArray[i % maxSize];
-            if (i % maxSize == rear)
-            {
-                rear = i;
-                break;
-            }
-        }
-        maxSize = 2 * maxSize - 1;
-        delete[] listArray;
-        listArray = tmp;
-    }*/
 
 public:
     AQueue(int size = defaultSize)
@@ -102,13 +75,6 @@ public:
     { // Get front value
         Assert(length() != 0, "Queue is empty");
         return listArray[rear];
-    }
-    const E leaveQueue()
-    {
-        Assert(length() != 0, "Queue is empty");
-        E tmp = listArray[rear];
-        rear = (rear - 1 + maxSize) % maxSize; // Circular decrement
-        return tmp;
     }
 };
 #endif

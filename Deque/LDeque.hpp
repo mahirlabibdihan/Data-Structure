@@ -1,5 +1,5 @@
-#ifndef __L_QUEUE__
-#define __L_QUEUE__
+#ifndef __L_DEQUE__
+#define __L_DEQUE__
 #include "Deque.hpp"
 #include "DLink.hpp"
 // Linked queue implementation

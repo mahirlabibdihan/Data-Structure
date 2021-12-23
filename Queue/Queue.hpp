@@ -34,7 +34,5 @@ public:
     virtual const E &frontValue() const = 0;
     // Return: A copy of the front element.
     virtual const E &rearValue() const = 0;
-    // Return: The rear element that has left the queue
-    virtual const E leaveQueue() = 0;
 };
 #endif

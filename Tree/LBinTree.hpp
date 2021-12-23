@@ -40,7 +40,7 @@ public:
     }
 
     // Return the number of nodes in the tree.
-    int size() { return nodecount; }
+    int size() const { return nodecount; }
     int height() const
     {
         return heighthelp(root);
@@ -134,8 +134,8 @@ int LBinTree<E>::heighthelp(BinNode<E> *root) const
     else
     {
         /* compute the depth of each subtree */
-        int lDepth = height(root->left());
-        int rDepth = height(root->right());
+        int lDepth = heighthelp(root->left());
+        int rDepth = heighthelp(root->right());
         /* use the larger one */
         return max(lDepth, rDepth) + 1;
     }
