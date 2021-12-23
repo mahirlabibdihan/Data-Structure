@@ -85,10 +85,7 @@ public:
 template <typename T>
 ostream &operator<<(ostream &os, LBinTree<T> *t)
 {
-    if (t->root == NULL)
-        cout << "The Tree is empty";
-    else
-        t->printhelp(t->root);
+    t->print();
     return os;
 }
 template <typename E>

@@ -9,7 +9,7 @@ using namespace std;
         exit(-1);                                  \
     }
 // heap class
-template <typename E>
+template <typename E, typename Comp>
 class Heap
 {
 protected:
@@ -27,4 +27,17 @@ public:
     // Remove and return element at specified position
     virtual E remove(int pos) = 0;
 };
+template <typename E, typename Comp>
+ostream &operator<<(ostream &os, Heap<E, Comp> *pq)
+{
+    if (pq->size() == 0)
+    {
+        return os;
+    }
+    E key = pq->removeFirst();
+    os << key << " ";
+    os << pq;
+    pq->insert(key);
+    return os;
+}
 #endif
