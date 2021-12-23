@@ -1,6 +1,4 @@
-#include "Heap.h"
-
-int main()
+/*int main()
 {
 	int n=5;
 	Heap* h=new Heap();
@@ -38,10 +36,34 @@ int main()
 		// call max heapify on the reduced heap
 		Heap::maxHeapifyArray(arr, i, 0); //prev root takey bad diye heapify again.
 	}*/
-	Heap::sort(arr,n);
+/*Heap::sort(arr,n);
 	cout<<"Sorted array: ";
 	for(int i=0;i<n;i++)
 	{
 		cout<<arr[i]<<"->";
 	}
+}*/
+class Comparable
+{
+public:
+	static bool prior(int a, int b)
+	{
+		return a > b;
+	}
+};
+
+#include "Heap.hpp"
+#include "PriorityQueue.hpp"
+
+int main()
+{
+	PriorityQueue<int, Comparable> *pq = new PriorityQueue<int, Comparable>(100);
+	pq->insertKey(3);
+	pq->insertKey(1);
+	pq->insertKey(6);
+	cout << pq << endl;
+	pq->increaseKey(1, 10);
+	cout << pq << endl;
+	pq->deleteKey(6);
+	cout << pq << endl;
 }
