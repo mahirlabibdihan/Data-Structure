@@ -7,8 +7,8 @@
         cout << "Assertion Failed: " << s << endl; \
         exit(-1);                                  \
     }
-#define VISITED true
-#define UNVISITED false
+#define VISITED 1
+#define UNVISITED 0
 // Graph abstract class. This ADT assumes that the number
 // of vertices is fixed when the graph is created.
 class Graph
@@ -54,25 +54,32 @@ void DFS(Graph *G, int v)
     // PreVisit(G, v); // Take appropriate action
     G->setMark(v, VISITED);
     for (int w = G->first(v); w < G->n(); w = G->next(v, w))
+    {
         if (G->getMark(w) == UNVISITED)
+        {
             DFS(G, w);
+        }
+    }
     // PostVisit(G, v); // Take appropriate action
 }
 void BFS(Graph *G, int start, Queue<int> *Q)
 {
-    int v, w;
+
     Q->enqueue(start); // Initialize Q
     G->setMark(start, VISITED);
     while (Q->length() != 0)
     { // Process all vertices on Q
+        int v, w;
         v = Q->dequeue();
         // PreVisit(G, v); // Take appropriate action
         for (w = G->first(v); w < G->n(); w = G->next(v, w))
+        {
             if (G->getMark(w) == UNVISITED)
             {
                 G->setMark(w, VISITED);
                 Q->enqueue(w);
             }
+        }
     }
 }
 ostream &operator<<(ostream &os, Graph *g)

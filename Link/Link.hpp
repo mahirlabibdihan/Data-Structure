@@ -30,13 +30,8 @@ public:
     E element;     // Value for this node
     Link<E> *next; // Point to next node in list
     // Constructors
-    Link()
-    {
-    }
-    virtual ~Link()
-    {
-        // cout << "Link Delete" << endl;
-    }
+    Link() {}
+    virtual ~Link() {}
     // Overloaded delete operator
     void operator delete(void *ptr)
     {

@@ -62,71 +62,69 @@ public:
         }
         return n(); // No neighbor
     }
-    // Set edge (i, j) to "weight"
-    void setEdge(int i, int j, int weight)
+    // Set edge (u, v) to "weight"
+    void setEdge(int u, int v, int weight)
     {
-
         Assert(weight > 0, "May not set weight to 0");
-        Edge currEdge(j, weight);
-        if (isEdge(i, j))
+        Edge currEdge(v, weight);
+        if (isEdge(u, v))
         { // Edge already exists in graph
-
-            vertex[i]->remove();
-            vertex[i]->insert(currEdge);
+            vertex[u]->remove();
         }
         else
         { // Keep neighbors sorted by vertex index
             numEdge++;
-            for (vertex[i]->moveToStart(); vertex[i]->currPos() < vertex[i]->length(); vertex[i]->next())
+            for (vertex[u]->moveToStart(); vertex[u]->currPos() < vertex[u]->length(); vertex[u]->next())
             {
-                Edge temp = vertex[i]->getValue();
-                if (temp.vertex() > j)
+                Edge temp = vertex[u]->getValue();
+                if (temp.vertex() > v)
                 {
                     break;
                 }
-                if (vertex[i]->currPos() + 1 == vertex[i]->length())
+                if (vertex[u]->currPos() + 1 == vertex[u]->length())
                 {
                     break;
                 }
             }
-            vertex[i]->insert(currEdge);
         }
+        vertex[u]->insert(currEdge);
     }
-    void delEdge(int i, int j)
+    void delEdge(int u, int v)
     { // Delete edge (i, j)
-        if (isEdge(i, j))
+        if (isEdge(u, v))
         {
-            vertex[i]->remove();
+            vertex[u]->remove();
             numEdge--;
         }
     }
-    bool isEdge(int i, int j)
-    { // Is (i,j) an edge?
-        Edge it;
-        for (vertex[i]->moveToStart(); vertex[i]->currPos() < vertex[i]->length(); vertex[i]->next())
+    bool isEdge(int u, int v)
+    { // Is (u,v) an edge?
+        for (vertex[u]->moveToStart(); vertex[u]->currPos() < vertex[u]->length(); vertex[u]->next())
         { // Check whole list
-            Edge temp = vertex[i]->getValue();
-            if (temp.vertex() == j)
+            Edge temp = vertex[u]->getValue();
+            if (temp.vertex() == v)
             {
                 return true;
             }
-            if (vertex[i]->currPos() + 1 == vertex[i]->length())
+            if (vertex[u]->currPos() + 1 == vertex[u]->length())
             {
                 break;
             }
         }
         return false;
     }
-    int weight(int i, int j)
-    { // Return weight of (i, j)
+    int weight(int u, int v)
+    { // Return weight of (u, v)
         Edge curr;
-        if (isEdge(i, j))
+        if (isEdge(u, v))
         {
-            curr = vertex[i]->getValue();
+            curr = vertex[u]->getValue();
             return curr.weight();
         }
         else
+        {
             return 0;
+        }
     }
     int getMark(int v) { return mark[v]; }
     void setMark(int v, int val) { mark[v] = val; }

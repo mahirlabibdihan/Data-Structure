@@ -1,7 +1,6 @@
 #ifndef __TREE__
 #define __TREE__
 // Binary Tree implementation
-template <typename E>
 class Tree
 {
 private:

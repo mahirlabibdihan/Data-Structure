@@ -6,6 +6,10 @@
     "xutility": "cpp",
     "deque": "cpp",
     "iostream": "cpp",
-    "ostream": "cpp"
+    "ostream": "cpp",
+    "map": "cpp",
+    "xtree": "cpp",
+    "iosfwd": "cpp",
+    "xlocmon": "cpp"
   }
 }

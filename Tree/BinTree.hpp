@@ -3,7 +3,7 @@
 #include "Tree.hpp"
 // Binary Tree implementation
 template <typename E>
-class BinTree : public Tree<E>
+class BinTree : public Tree
 {
 public:
     // Constructor
