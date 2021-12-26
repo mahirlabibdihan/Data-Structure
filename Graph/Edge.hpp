@@ -16,7 +16,6 @@ public:
         vert = v;
         wt = w;
     }
-    ~Edge() {}
     int vertex() { return vert; }
     int weight() { return wt; }
 };
