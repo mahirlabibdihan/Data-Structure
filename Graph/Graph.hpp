@@ -1,6 +1,6 @@
 #ifndef __GRAPH__
 #define __GRAPH__
-#include "Queue/LQueue.hpp"
+#include "../Queue/LQueue.hpp"
 #define Assert(val, s)                             \
     if (!(val))                                    \
     {                                              \
@@ -31,7 +31,7 @@ public:
     // Set the weight for an edge
     // i, j: The vertices
     // wgt: Edge weight
-    virtual void setEdge(int v1, int v2, int wght) = 0;
+    virtual void setEdge(int v1, int v2, int wght = 1) = 0;
     // Delete an edge
     // i, j: The vertices
     virtual void delEdge(int v1, int v2) = 0;
@@ -74,5 +74,20 @@ void BFS(Graph *G, int start, Queue<int> *Q)
                 Q->enqueue(w);
             }
     }
+}
+ostream &operator<<(ostream &os, Graph *g)
+{
+    for (int i = 0; i < g->n(); i++)
+    {
+        cout << i;
+        int w = g->first(i);
+        while (w != g->n())
+        {
+            cout << "->" << w << "[" << g->weight(i, w) << "]";
+            w = g->next(i, w);
+        }
+        cout << endl;
+    }
+    return os;
 }
 #endif

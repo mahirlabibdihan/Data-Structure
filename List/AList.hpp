@@ -151,16 +151,5 @@ public:
         Assert((curr >= 0) && (curr < listSize), "Empty list");
         return listArray[curr];
     }
-    int find(const E &item) const
-    { // search for item in the list
-        for (int i = 0; i < listSize; i++)
-        {
-            if (listArray[i] == item)
-            {
-                return i;
-            }
-        }
-        return -1;
-    }
 };
 #endif

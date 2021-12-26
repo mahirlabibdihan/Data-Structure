@@ -168,5 +168,24 @@ public:
         this->nodecount--;
         return tmp;
     }
+    // Remove and return element at specified position
+    E remove(int pos)
+    {
+        Assert((pos >= 0) && (pos < n), "Bad position");
+        if (pos == (n - 1))
+        {
+            n--; // Last element, no work to do
+        }
+        else
+        {
+            swap(heap[pos], heap[--n]); // Swap with last value
+            shiftUp(pos);
+            if (n != 0)
+            {
+                shiftDown(pos); // Push down small key
+            }
+        }
+        return heap[n];
+    }
 };
 #endif

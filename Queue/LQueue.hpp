@@ -1,7 +1,7 @@
 #ifndef __L_QUEUE__
 #define __L_QUEUE__
 #include "Queue.hpp"
-#include "SLink.hpp"
+#include "../Link/SLink.hpp"
 // Linked queue implementation
 template <typename E>
 class LQueue : public Queue<E>

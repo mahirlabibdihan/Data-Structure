@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Stack.hpp"
-#include "SLink.hpp"
+#include "../Link/SLink.hpp"
 using namespace std;
 // Linked stack implementation
 template <typename E>

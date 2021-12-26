@@ -1,7 +1,7 @@
 #ifndef __L_LIST__
 #define __L_LIST__
 #include <iostream>
-#include "Link.hpp"
+#include "../Link/Link.hpp"
 #include "List.hpp"
 using namespace std;
 /*
@@ -68,20 +68,6 @@ public:
         curr = head;
     }
     // Move curr one step right; no change if already at end
-    void next()
-    {
-        if (head == tail)
-        {
-            cout << "Already at last position" << endl;
-            return;
-        }
-        else if (curr->next == tail)
-        {
-            cout << "Already at last position" << endl;
-            return;
-        }
-        curr = curr->next;
-    }
     int length() const
     {
         return listSize;
@@ -113,20 +99,6 @@ public:
     { // Return current element
         Assert(curr->next != NULL, "Empty list");
         return curr->next->element;
-    }
-    int find(const E &item) const
-    {
-        Link<E> *temp = head->next;
-        for (int i = 0; i < listSize; i++)
-        {
-            if (temp->element == item)
-            {
-                return i;
-            }
-            temp = temp->next;
-        }
-        delete temp;
-        return -1; // item not found
     }
 };
 #endif

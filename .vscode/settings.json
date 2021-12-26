@@ -5,6 +5,7 @@
     "xstring": "cpp",
     "xutility": "cpp",
     "deque": "cpp",
-    "iostream": "cpp"
+    "iostream": "cpp",
+    "ostream": "cpp"
   }
 }

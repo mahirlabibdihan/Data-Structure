@@ -1,7 +1,6 @@
 #ifndef __D_LINK__
 #define __D_LINK__
 // Doubly linked list node
-// Doubly linked list link node with freelist support
 #include "Link.hpp"
 template <typename E>
 class DLink : public Link<E>

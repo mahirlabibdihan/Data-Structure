@@ -1,5 +1,6 @@
 #include "Graph.hpp"
-#include "List/DLList.hpp"
+#include "../List/SLList.hpp"
+#include "../List/DLList.hpp"
 #include "Edge.hpp"
 class LGraph : public Graph
 {
@@ -16,7 +17,9 @@ public:
     {                  // Destructor
         delete[] mark; // Return dynamically allocated memory
         for (int i = 0; i < numVertex; i++)
+        {
             delete[] vertex[i];
+        }
         delete[] vertex;
     }
     void init(int n)
@@ -28,9 +31,11 @@ public:
         for (i = 0; i < numVertex; i++)
             mark[i] = UNVISITED;
         // Create and initialize adjacency lists
-        vertex = (List<Edge> **)new List<Edge> *[numVertex];
+        vertex = new List<Edge> *[numVertex];
         for (i = 0; i < numVertex; i++)
+        {
             vertex[i] = new DLList<Edge>();
+        }
     }
     int n() { return numVertex; } // Number of vertices
     int e() { return numEdge; }   // Number of edges
@@ -60,23 +65,29 @@ public:
     // Set edge (i, j) to "weight"
     void setEdge(int i, int j, int weight)
     {
+
         Assert(weight > 0, "May not set weight to 0");
         Edge currEdge(j, weight);
         if (isEdge(i, j))
         { // Edge already exists in graph
+
             vertex[i]->remove();
             vertex[i]->insert(currEdge);
         }
         else
         { // Keep neighbors sorted by vertex index
             numEdge++;
-            for (vertex[i]->moveToStart();
-                 vertex[i]->currPos() < vertex[i]->length();
-                 vertex[i]->next())
+            for (vertex[i]->moveToStart(); vertex[i]->currPos() < vertex[i]->length(); vertex[i]->next())
             {
                 Edge temp = vertex[i]->getValue();
                 if (temp.vertex() > j)
+                {
                     break;
+                }
+                if (vertex[i]->currPos() + 1 == vertex[i]->length())
+                {
+                    break;
+                }
             }
             vertex[i]->insert(currEdge);
         }
@@ -92,13 +103,17 @@ public:
     bool isEdge(int i, int j)
     { // Is (i,j) an edge?
         Edge it;
-        for (vertex[i]->moveToStart();
-             vertex[i]->currPos() < vertex[i]->length();
-             vertex[i]->next())
+        for (vertex[i]->moveToStart(); vertex[i]->currPos() < vertex[i]->length(); vertex[i]->next())
         { // Check whole list
             Edge temp = vertex[i]->getValue();
             if (temp.vertex() == j)
+            {
                 return true;
+            }
+            if (vertex[i]->currPos() + 1 == vertex[i]->length())
+            {
+                break;
+            }
         }
         return false;
     }

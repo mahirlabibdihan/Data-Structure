@@ -1,10 +1,9 @@
-#include "Graph2.hpp"
+#include "LGraph.hpp"
 int main()
 {
-	Graph g(6);
-	g.connect(0,1);
-	g.connect(1,2);
-	g.connect(0,2);
-
-	cout<<g.isBipartite()<<endl;
+	Graph *g = new LGraph(10);
+	g->setEdge(0, 9, 4);
+	g->setEdge(1, 2);
+	g->setEdge(0, 7, 3);
+	cout << g << endl;
 }

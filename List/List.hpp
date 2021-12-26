@@ -27,31 +27,44 @@ public:
     virtual int currPos() const = 0;
     virtual void moveToPos(int pos) = 0;
     virtual const E &getValue() const = 0;
-    virtual int find(const E &item) const = 0;
 };
-
+template <typename E>
+int find(List<E> *lst, const E &item)
+{
+    int curr = lst->currPos();
+    for (lst->moveToStart(); lst->currPos() < lst->length(); lst->next())
+    {
+        if (item == lst->getValue())
+        {
+            return lst->currPos();
+        }
+        if (lst->currPos() + 1 == lst->length())
+        {
+            break;
+        }
+    }
+    lst->moveToPos(curr);
+    return -1; // item not found
+}
 template <typename E>
 ostream &operator<<(ostream &os, List<E> *lst)
 {
     int curr = lst->currPos();
     os << "<";
-    if (lst->length() > 0)
+    for (lst->moveToStart(); lst->currPos() < lst->length(); lst->next())
     {
-        for (lst->moveToStart();; lst->next())
+        if (lst->currPos() == curr)
         {
-            if (lst->currPos() == curr)
-            {
-                os << "| ";
-            }
-            os << lst->getValue() << ' ';
-
-            if (lst->currPos() + 1 == lst->length())
-            {
-                break;
-            }
+            os << "| ";
         }
-        lst->moveToPos(curr);
+        os << lst->getValue() << ' ';
+
+        if (lst->currPos() + 1 == lst->length())
+        {
+            break;
+        }
     }
+    lst->moveToPos(curr);
     os << ">";
     return os;
 }

@@ -2,7 +2,7 @@
 #define __D_L_LIST__
 #include <iostream>
 #include "LList.hpp"
-#include "DLink.hpp"
+#include "../Link/DLink.hpp"
 using namespace std;
 
 // Doubly Linked list implementation
@@ -40,6 +40,15 @@ public:
     {
         LList<E>::removeAll();
         init();
+    }
+    void next()
+    {
+        if (this->curr->next->next == this->tail)
+        {
+            cout << "Already at last position" << endl;
+            return;
+        }
+        this->curr = this->curr->next;
     }
     // Insert "it" at current position
     void insert(const E &it)

@@ -1,7 +1,7 @@
 #ifndef __S_L_LIST__
 #define __S_L_LIST__
 #include <iostream>
-#include "SLink.hpp"
+#include "../Link/SLink.hpp"
 #include "LList.hpp"
 using namespace std;
 // Linked list implementation
@@ -37,6 +37,15 @@ public:
     {
         this->removeAll();
         init();
+    }
+    void next()
+    {
+        if (this->curr->next == this->tail)
+        {
+            cout << "Already at last position" << endl;
+            return;
+        }
+        this->curr = this->curr->next;
     }
     void insert(const E &it)
     { // Insert "it" at current position
