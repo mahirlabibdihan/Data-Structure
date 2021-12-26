@@ -19,8 +19,13 @@ public:
         this->prev = prevp;
         this->next = nextp;
     }
-    ~DLink()
-    {
+    void *operator new(size_t t)
+    { // Overloaded new operator
+        if (Link<E>::freelist == NULL)
+            return ::new DLink<E>();       // Create space
+        Link<E> *temp = Link<E>::freelist; // Can take from freelist
+        Link<E>::freelist = Link<E>::freelist->next;
+        return temp; // Return the link
     }
 };
 #endif

@@ -31,7 +31,6 @@ public:
     }
     ~SLList()
     {
-        this->removeAll();
     }
     void clear()
     {

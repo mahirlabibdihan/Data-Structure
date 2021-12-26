@@ -1,10 +1,9 @@
 #ifndef __D_L_LIST__
 #define __D_L_LIST__
 #include <iostream>
-#include "LList.hpp"
 #include "../Link/DLink.hpp"
+#include "LList.hpp"
 using namespace std;
-
 // Doubly Linked list implementation
 template <typename E>
 class DLList : public LList<E>
@@ -38,7 +37,7 @@ public:
     }
     void clear()
     {
-        LList<E>::removeAll();
+        this->removeAll();
         init();
     }
     void next()

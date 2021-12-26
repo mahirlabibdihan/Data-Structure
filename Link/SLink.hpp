@@ -2,18 +2,25 @@
 #define __S_LINK__
 #include <cstddef>
 // Singly linked list node
-// Singly linked list node with freelist support
 #include "Link.hpp"
 template <typename E>
 class SLink : public Link<E>
 {
 public:
     // Constructors
-    SLink(const E &elemval, Link<E> *nextval = NULL)
+    SLink(Link<E> *nextp = NULL) { this->next = nextp; }
+    SLink(const E &it, Link<E> *nextp = NULL)
     {
-        this->element = elemval;
-        this->next = nextval;
+        this->element = it;
+        this->next = nextp;
     }
-    SLink(Link<E> *nextval = NULL) { this->next = nextval; }
+    void *operator new(size_t t)
+    { // Overloaded new operator
+        if (Link<E>::freelist == NULL)
+            return ::new SLink<E>();       // Create space
+        Link<E> *temp = Link<E>::freelist; // Can take from freelist
+        Link<E>::freelist = Link<E>::freelist->next;
+        return temp; // Return the link
+    }
 };
 #endif

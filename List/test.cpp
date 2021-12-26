@@ -1,8 +1,16 @@
 #include "DLList.hpp"
-
+#include "../Graph/Edge.hpp"
 int main()
 {
-    List<int> *lst = new DLList<int>();
-    lst->append(10);
-    cout << lst << endl;
+    for (int i = 0; i < 100; i++)
+    {
+        try
+        {
+            new DLList<Edge>();
+        }
+        catch (std::bad_alloc &ba)
+        {
+            std::cerr << "bad_alloc caught: " << ba.what();
+        }
+    }
 }

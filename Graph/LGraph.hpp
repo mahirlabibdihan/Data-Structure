@@ -34,7 +34,7 @@ public:
         vertex = new List<Edge> *[numVertex];
         for (i = 0; i < numVertex; i++)
         {
-            vertex[i] = new DLList<Edge>();
+            vertex[i] = new SLList<Edge>();
         }
     }
     int n() { return numVertex; } // Number of vertices

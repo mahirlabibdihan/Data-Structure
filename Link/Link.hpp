@@ -24,7 +24,7 @@ public:
 template <typename E>
 class Link
 {
-private:
+protected:
     static Link<E> *freelist; // Reference to freelist head
 public:
     E element;     // Value for this node
@@ -37,18 +37,10 @@ public:
     {
         // cout << "Link Delete" << endl;
     }
-    void *operator new(size_t t)
-    { // Overloaded new operator
-        if (freelist == NULL)
-            return ::new Link<E>(); // Create space
-        Link<E> *temp = freelist;   // Can take from freelist
-        freelist = freelist->next;
-        return temp; // Return the link
-    }
     // Overloaded delete operator
     void operator delete(void *ptr)
     {
-        // cout << "Link Delete override" << endl;
+        cout << "Link Delete override" << endl;
         ((Link<E> *)ptr)->next = freelist; // Put on freelist
         freelist = (Link<E> *)ptr;
     }
