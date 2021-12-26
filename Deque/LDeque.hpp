@@ -1,7 +1,7 @@
 #ifndef __L_DEQUE__
 #define __L_DEQUE__
 #include "Deque.hpp"
-#include "DLink.hpp"
+#include "../Link/DLink.hpp"
 // Linked queue implementation
 template <typename E>
 class LDeque : public Deque<E>

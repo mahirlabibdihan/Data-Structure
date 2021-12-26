@@ -1,0 +1,20 @@
+#include "Link/SLink.hpp"
+#include "Link/DLink.hpp"
+#include "Deque/ADeque.hpp"
+#include "Deque/LDeque.hpp"
+#include "Queue/LQueue.hpp"
+#include "Queue/AQueue.hpp"
+#include "Stack/AStack.hpp"
+#include "Stack/LStack.hpp"
+#include "List/AList.hpp"
+#include "List/SLList.hpp"
+#include "List/DLList.hpp"
+#include "Tree/LBST.hpp"
+#include "Heap/AHeap.hpp"
+#include "Heap/LHeap.hpp"
+#include "PriorityQueue/PriorityQueue.hpp"
+#include "Graph/AGraph.hpp"
+#include "Graph/LGraph.hpp"
+int main()
+{
+}

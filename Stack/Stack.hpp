@@ -1,5 +1,5 @@
-#ifndef __L_STACK__
-#define __L_STACK__
+#ifndef __STACK__
+#define __STACK__
 #include <iostream>
 using namespace std;
 #define Assert(val, s)                             \
@@ -33,11 +33,10 @@ public:
     virtual const T &topValue() const = 0;
     virtual void setDirection(int direction) = 0;
 };
-
 template <typename T>
 ostream &operator<<(ostream &os, Stack<T> *s)
 {
-    Stack<T> *tmp = new LStack<T>(s->length());
+    /*Stack<T> *tmp = new LStack<T>(s->length());
     os << "<";
     while (s->length() > 0)
     {
@@ -55,7 +54,7 @@ ostream &operator<<(ostream &os, Stack<T> *s)
         }
     }
     cout << ">";
-    delete tmp;
+    delete tmp;*/
     return os;
 }
 #endif

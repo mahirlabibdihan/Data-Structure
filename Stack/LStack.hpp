@@ -1,3 +1,5 @@
+#ifndef __L_STACK__
+#define __L_STACK__
 #include <iostream>
 #include "Stack.hpp"
 #include "../Link/SLink.hpp"
@@ -56,3 +58,4 @@ public:
     {
     }
 };
+#endif
