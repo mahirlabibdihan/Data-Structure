@@ -64,7 +64,6 @@ void DFS(Graph *G, int v)
 }
 void BFS(Graph *G, int start, Queue<int> *Q)
 {
-
     Q->enqueue(start); // Initialize Q
     G->setMark(start, VISITED);
     while (Q->length() != 0)

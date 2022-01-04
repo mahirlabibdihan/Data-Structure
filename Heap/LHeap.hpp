@@ -2,9 +2,9 @@
 #define __L_HEAP__
 #include <iostream>
 #include "BinNode.hpp"
+#include "Heap.hpp"
 #include "../Queue/LQueue.hpp"
 #include "../Deque/LDeque.hpp"
-#include "../Tree/LBinTree.hpp"
 using namespace std;
 #define Assert(val, s)                             \
     if (!(val))                                    \
@@ -14,13 +14,16 @@ using namespace std;
     }
 // LHeap class
 template <typename E, typename Comp>
-class LHeap : public LBinTree<E>
+class LHeap : public Heap<E, Comp>
 {
+private:
+    BinNode<E> *root; // Root of the LBinTree
+    int nodecount;    // Number of nodes in the LBinTree
 protected:
     // O(logn)
     void shiftDown(BinNode<E> *root)
     {
-        BinNode<E> *largest = root;        //initialize root as largest element
+        BinNode<E> *largest = root;        //initialize root as largest priority
         BinNode<E> *left = root->left();   //left child
         BinNode<E> *right = root->right(); //right child
         // If left child is larger than root
@@ -40,7 +43,7 @@ protected:
             }
         }
 
-        if (largest != root) //largest elemnt jodi root na hoy..
+        if (largest != root) // If largest is not root, then it will go down
         {
             // Swap
             E temp = largest->element();
@@ -68,23 +71,39 @@ protected:
 public:
     LHeap(int max = 0)
     {
+        root = NULL;
+        nodecount = 0;
+    }
+    LHeap(E *h, int num, int max = 0) // Constructor
+    {
+        root = NULL;
+        nodecount = num;
+        for (int i = 0; i < num; i++)
+        {
+            this->insert(h[i]);
+        }
     }
     ~LHeap()
     {
     }
+    int size() const { return this->nodecount; }
     void heapify(BinNode<E> *root) // Heapify contents of Heap
     {
         // If a node doesn't have left or right child,then it's a leaf. Otherwise it's non-leaf
         if (root != NULL)
         {
-            if (root->left == NULL && root->right == NULL)
+            if (root->left() == NULL && root->right() == NULL)
             {
                 return; // Leaf
             }
-            heapify(root->left);
+            heapify(root->left());
             shiftDown(root); // called heapify on all the non-leaf elements of the heap
-            heapify(root->right);
+            heapify(root->right());
         }
+    }
+    void buildHeap()
+    {
+        heapify(this->root);
     }
     // Insert "it" into the LHeap
     void insert(const E &it)
@@ -169,4 +188,16 @@ public:
         return tmp;
     }
 };
+#ifndef __HEAP_SORT__
+#define __HEAP_SORT__
+template <typename E, typename Comp>
+void heapsort(E A[], int n)
+{                                                   // Heapsort
+    Heap<E, Comp> *H = new LHeap<E, Comp>(A, n, n); // Build the heap
+    for (int i = 0; i < n; i++)                     // Now sort
+    {
+        A[n - i - 1] = H->removeFirst(); // Place maxval at end
+    }
+}
+#endif
 #endif

@@ -1,3 +1,5 @@
+#ifndef __L_GRAPH__
+#define __L_GRAPH__
 #include "Graph.hpp"
 #include "../List/SLList.hpp"
 #include "../List/DLList.hpp"
@@ -14,11 +16,12 @@ public:
         init(numVert);
     }
     ~LGraph()
-    {                  // Destructor
+    {
+        // Destructor
         delete[] mark; // Return dynamically allocated memory
         for (int i = 0; i < numVertex; i++)
         {
-            delete[] vertex[i];
+            delete vertex[i];
         }
         delete[] vertex;
     }
@@ -34,7 +37,7 @@ public:
         vertex = new List<Edge> *[numVertex];
         for (i = 0; i < numVertex; i++)
         {
-            vertex[i] = new SLList<Edge>();
+            vertex[i] = new DLList<Edge>();
         }
     }
     int n() { return numVertex; } // Number of vertices
@@ -63,7 +66,7 @@ public:
         return n(); // No neighbor
     }
     // Set edge (u, v) to "weight"
-    void setEdge(int u, int v, int weight)
+    void setEdge(int u, int v, int weight = 1)
     {
         Assert(weight > 0, "May not set weight to 0");
         Edge currEdge(v, weight);
@@ -129,3 +132,4 @@ public:
     int getMark(int v) { return mark[v]; }
     void setMark(int v, int val) { mark[v] = val; }
 };
+#endif

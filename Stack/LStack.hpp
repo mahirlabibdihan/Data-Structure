@@ -58,4 +58,31 @@ public:
     {
     }
 };
+#ifndef __STACK_PRINT__
+#define __STACK_PRINT__
+template <typename T>
+ostream &operator<<(ostream &os, Stack<T> *s)
+{
+    Stack<T> *tmp = new LStack<T>(s->length());
+    os << "<";
+    while (s->length() > 0)
+    {
+        tmp->push(s->topValue());
+        s->pop();
+    }
+    while (tmp->length() > 0)
+    {
+        os << tmp->topValue();
+        s->push(tmp->topValue());
+        tmp->pop();
+        if (tmp->length() > 0)
+        {
+            os << ", ";
+        }
+    }
+    cout << ">";
+    delete tmp;
+    return os;
+}
+#endif
 #endif

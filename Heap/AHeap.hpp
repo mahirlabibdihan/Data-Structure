@@ -1,14 +1,15 @@
 #ifndef __A_HEAP__
 #define __A_HEAP__
-// heap class
+#include "Heap.hpp"
+// heapArray class
 template <typename E, typename Comp>
-class AHeap
+class AHeap : public Heap<E, Comp>
 {
-private:
-    E *heap; // Pointer to the heap array
+protected:
+    E *heapArray; // Pointer to the heapArray array
     static const int defaultSize = 10;
-    int maxSize; // Maximum size of the heap
-    int n;       // Number of elements now in the heap
+    int maxSize; // Maximum size of the heapArray
+    int n;       // Number of elements now in the heapArray
     // Helper function to put element in its correct place
     void shiftDown(int pos)
     {
@@ -16,19 +17,19 @@ private:
         { // Stop if pos is a leaf
             int j = leftChild(pos);
             int rc = rightChild(pos);
-            if ((rc < n) && Comp::prior(heap[rc], heap[j]))
+            if ((rc < n) && Comp::prior(heapArray[rc], heapArray[j]))
                 j = rc; // Set j to greater child’s value
-            if (Comp::prior(heap[pos], heap[j]))
+            if (Comp::prior(heapArray[pos], heapArray[j]))
                 return; // Done
-            swap(heap[pos], heap[j]);
+            swap(heapArray[pos], heapArray[j]);
             pos = j; // Move down
         }
     }
     void shiftUp(int pos)
     {
-        while (pos != 0 && Comp::prior(heap[pos], heap[parent(pos)]))
+        while (pos != 0 && Comp::prior(heapArray[pos], heapArray[parent(pos)]))
         {
-            swap(heap[pos], heap[parent(pos)]);
+            swap(heapArray[pos], heapArray[parent(pos)]);
             pos = parent(pos); // Move down
         }
     }
@@ -48,57 +49,96 @@ private:
     {
         return (pos - 1) / 2;
     }
+    void expand()
+    {
+        E *temp = new E[2 * maxSize];
+        for (int i = 0; i < 2 * maxSize; i++)
+        {
+            temp[i] = heapArray[i];
+        }
+        maxSize *= 2;
+        delete[] heapArray;
+        heapArray = temp;
+    }
 
 public:
     AHeap(int max = defaultSize)
     {
         maxSize = max;
-        heap = new E[maxSize];
+        heapArray = new E[maxSize];
         n = 0;
     }
     AHeap(E *h, int num, int max) // Constructor
     {
-        heap = h;
+        heapArray = h;
         n = num;
         maxSize = max;
-        heapify();
+        buildHeap();
     }
-    int size() const // Return current heap size
+    int size() const // Return current heapArray size
     {
         return n;
     }
-    void heapify() // Heapify contents of heap
+    void buildHeap() // Heapify contents of heapArray
     {
         for (int i = n / 2 - 1; i >= 0; i--)
         {
             shiftDown(i);
         }
     }
-    // Insert "it" into the heap
+    // Insert "it" into the heapArray
     void insert(const E &it)
     {
         if (n == maxSize)
         {
-            cout << "AHeap is full" << endl;
-            return;
+            expand();
         }
         n++;
-        heap[n - 1] = it; // Start at end of heap
+        heapArray[n - 1] = it; // Start at end of heapArray
         // Now sift up until curr’s parent > curr
         shiftUp(n - 1);
     }
     // Remove first value
     E removeFirst()
     {
-        Assert(n > 0, "AHeap is empty");
-        swap(heap[0], heap[--n]); // Swap first with last value
+        Assert(n > 0, "Heap is empty");
+        swap(heapArray[0], heapArray[--n]); // Swap first with last value
         if (n != 0)
         {
             shiftDown(0); // shiftdown new root val
         }
-        return heap[n]; // Return deleted value
+        return heapArray[n]; // Return deleted value
     }
     // Remove and return element at specified position
+    /*
+    Case 1:
+                1
+            2       8
+          3   5  10  11
+        6
+    If we want to delete 10, we have to replace it with 6.
+                1
+            2       8
+          3   5   6   11
+    Since 6 is smaller than 8 we have to shift it up.
+                1
+            2       6
+          3   5   8   11
+
+    Case 2:
+                1
+            2       8
+          3   5  10  11
+        6
+    If we want to delete 2, we have to replace it with 6.
+                1
+            6       8
+          3   5  10   11
+    Since 6 is greater than 3 and 5 we have to shift it down.
+                1
+            3       8
+          6   5  10   11
+    */
     E remove(int pos)
     {
         Assert((pos >= 0) && (pos < n), "Bad position");
@@ -108,14 +148,29 @@ public:
         }
         else
         {
-            swap(heap[pos], heap[--n]); // Swap with last value
+            swap(heapArray[pos], heapArray[--n]); // Swap with last value
+            // In next step, it will be either shiftUp or shiftDown.
+            // Only one operation will be executed
+            // Percolation
             shiftUp(pos);
             if (n != 0)
             {
                 shiftDown(pos); // Push down small key
             }
         }
-        return heap[n];
+        return heapArray[n];
     }
 };
+#ifndef __HEAP_SORT__
+#define __HEAP_SORT__
+template <typename E, typename Comp>
+void heapsort(E A[], int n)
+{                                                   // Heapsort
+    Heap<E, Comp> *H = new AHeap<E, Comp>(A, n, n); // Build the heapArray
+    for (int i = 0; i < n; i++)                     // Now sort
+    {
+        A[n - i - 1] = H->removeFirst(); // Place maxval at end
+    }
+}
+#endif
 #endif

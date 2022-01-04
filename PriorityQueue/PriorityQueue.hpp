@@ -1,14 +1,15 @@
 #include <iostream>
 #include <climits>
-#include "../Heap/Heap.hpp"
+#include "../Heap/AHeap.hpp"
 using namespace std;
-// heap class
+// heapArray class
 template <typename E, typename Comp>
-class PriorityQueue : public Heap<E, Comp>
+class PriorityQueue : public AHeap<E, Comp>
 {
+private:
     int getPos(const E &key, int pos)
     {
-        if (this->heap[pos] == key)
+        if (this->heapArray[pos] == key)
         {
             return pos;
         }
@@ -35,33 +36,40 @@ class PriorityQueue : public Heap<E, Comp>
             return -1;
         }
     }
-
-public:
-    PriorityQueue(int max = Heap<E, Comp>::defaultSize) : Heap<E, Comp>::Heap(max)
-    {
-    }
-    // Insert "it" into the heap
-    void insertKey(const E &key)
-    {
-        this->n++;
-        this->heap[this->n - 1] = INT_MIN;
-        heapIncreaseKey(this->n - 1, key);
-    }
-    void deleteKey(const E &key)
-    {
-        int pos = getPos(key, 0);
-        Assert(pos != -1, "No suck key");
-        heapDeleteKey(pos);
-    }
     void heapDeleteKey(int pos)
     {
         heapIncreaseKey(pos, INT_MAX);
         extractMax();
     }
+    void heapIncreaseKey(int pos, const E &key)
+    {
+        Assert(key >= this->heapArray[pos], "new key is smaller than current key");
+        this->heapArray[pos] = key;
+        this->shiftUp(pos);
+    }
+
+public:
+    PriorityQueue(int max = AHeap<E, Comp>::defaultSize) : AHeap<E, Comp>::AHeap(max)
+    {
+    }
+    // Insert "it" into the heapArray
+    void insertKey(const E &key)
+    {
+        this->n++;
+        this->heapArray[this->n - 1] = INT_MIN;
+        heapIncreaseKey(this->n - 1, key);
+    }
+    void deleteKey(const E &key)
+    {
+        int pos = getPos(key, 0);
+        Assert(pos != -1, "No such key");
+        heapDeleteKey(pos);
+    }
+
     const E &getMax()
     {
-        Assert(this->n > 0, "Heap is empty");
-        return this->heap[0]; // Return deleted value
+        Assert(this->n > 0, "AHeap is empty");
+        return this->heapArray[0]; // Return deleted value
     }
     E extractMax()
     {
@@ -72,12 +80,6 @@ public:
         int pos = getPos(oldKey, 0);
         Assert(pos != -1, "No such key");
         heapIncreaseKey(pos, newKey);
-    }
-    void heapIncreaseKey(int pos, const E &key)
-    {
-        Assert(key >= this->heap[pos], "new key is smaller than current key");
-        this->heap[pos] = key;
-        this->shiftUp(pos);
     }
 };
 
@@ -92,5 +94,18 @@ ostream &operator<<(ostream &os, PriorityQueue<E, Comp> *pq)
     os << key << " ";
     os << pq;
     pq->insertKey(key);
+    return os;
+}
+template <typename E, typename Comp>
+ostream &operator<<(ostream &os, PriorityQueue<E, Comp> pq)
+{
+    if (pq.size() == 0)
+    {
+        return os;
+    }
+    E key = pq.removeFirst();
+    os << key << " ";
+    os << pq;
+    pq.insertKey(key);
     return os;
 }

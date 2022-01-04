@@ -35,7 +35,6 @@ public:
     // Overloaded delete operator
     void operator delete(void *ptr)
     {
-        cout << "Link Delete override" << endl;
         ((Link<E> *)ptr)->next = freelist; // Put on freelist
         freelist = (Link<E> *)ptr;
     }

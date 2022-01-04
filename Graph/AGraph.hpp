@@ -70,7 +70,7 @@ public:
         return numVertex; // Return n if none
     }
     // Set edge (v1, v2) to "wt"
-    void setEdge(int v1, int v2, int wt) // 1 for unweighted
+    void setEdge(int v1, int v2, int wt = 1) // 1 for unweighted
     {
         Assert(wt > 0, "Illegal weight value");
         if (matrix[v1][v2] == 0)

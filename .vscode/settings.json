@@ -10,6 +10,7 @@
     "map": "cpp",
     "xtree": "cpp",
     "iosfwd": "cpp",
-    "xlocmon": "cpp"
+    "xlocmon": "cpp",
+    "climits": "cpp"
   }
 }

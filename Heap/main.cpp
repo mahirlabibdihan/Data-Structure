@@ -52,18 +52,17 @@ public:
 	}
 };
 
-#include "Heap.hpp"
-#include "PriorityQueue.hpp"
-
+#include "AHeap.hpp"
+#include <iostream>
+using namespace std;
 int main()
 {
-	PriorityQueue<int, Comparable> *pq = new PriorityQueue<int, Comparable>(100);
-	pq->insertKey(3);
-	pq->insertKey(1);
-	pq->insertKey(6);
-	cout << pq << endl;
-	pq->increaseKey(1, 10);
-	cout << pq << endl;
-	pq->deleteKey(6);
-	cout << pq << endl;
+	int a[] = {5, 4, 3, 2, 5, 1};
+	int n = sizeof(a) / sizeof(a[0]);
+	heapsort<int, Comparable>(a, n);
+	for (int i = 0; i < n; i++)
+	{
+		cout << a[i] << " ";
+	}
+	cout << endl;
 }

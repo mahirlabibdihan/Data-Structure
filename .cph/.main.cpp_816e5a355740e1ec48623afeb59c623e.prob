@@ -1,0 +1,1 @@
+{"name":"Local: main","url":"g:\\Github\\Data-Structure\\main.cpp","tests":[{"id":1641290101548,"input":"3 2\n1 2\n1 3","output":"1 2 3"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"g:\\Github\\Data-Structure\\main.cpp","group":"local","local":true}
