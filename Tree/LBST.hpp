@@ -259,4 +259,22 @@ bool LBST<Key, E>::findhelp(BinNode<E> *root, const Key &k) const
         return true;
     }
 }
+template <typename Key, typename E>
+void sort(E arr[], int n)
+{
+    LBST<Key, E> *bst = new LBST<Key, E>();
+
+    // O(nlogn)
+    for (int i = 0; i < n; i++)
+    {
+        bst->insert(arr[i], arr[i]);
+    }
+    // O(n)
+    E *newArr = bst->inorder();
+    for (int i = 0; i < n; i++)
+    {
+        arr[i] = newArr[i];
+    }
+    delete bst;
+}
 #endif

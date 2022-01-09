@@ -1,6 +1,9 @@
 Array:
     1. Memory allocation location = Stack
     2. Types: 1D,2D or multidimensional
+    3. Array-based lists are generally more space
+        efficient when the user knows in advance
+        approximately how large the list will become.
     Pros:
         1. Accessing element = O(1)
         2. Binary search = O(logn)
@@ -15,6 +18,9 @@ Array:
 LinkedList:
     1. Memory allocation location = Heap
     2. Types: Singly,Doubly or Circular
+    3. linked lists are more space efficient when
+        implementing lists whose number of elements
+        varies widely or is unknown.
     Pros:
         1. Inserting element = O(1)
         2. Deleting element = O(1)
@@ -25,3 +31,10 @@ LinkedList:
         2. Searching = O(n)
         3. Allocated memory = n*sizeof(data type+pointer)
         4. Random access = Not Allowed
+
+the array-based implementation
+would be more efficient (if the link field
+and the element field are the same size)
+whenever the array is more than,
+half full(SLL).
+one-third full(DLL).

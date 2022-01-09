@@ -1,0 +1,25 @@
+HEAP vs BST
+	Max Heap
+        Build(from array): O(logn)
+        Build(Inserting one by one): O(nlogn)
+        Insert: O(logn)
+        Removing max: O(logn)
+        Removing min: O(n)
+        Get Max: O(1)
+        Get Min: O(n)
+        Heap sort: O(nlogn)
+        Worst case height=logn
+        Complete Binary Tree
+        Unordered data structure
+
+	BST
+        Build: O(nlogn)
+        Insert: O(logn)
+        Removing max: O(logn)
+        Removing min: O(logn)
+        Get Max:O(logn)
+        Get Min: O(logn)
+        Get sorted order using inorder traversal:O(n)
+        Worst case height = n
+        Unbalanced tree
+        Ordered data structure

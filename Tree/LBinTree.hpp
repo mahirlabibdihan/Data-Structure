@@ -21,6 +21,18 @@ private:
     int postorderhelp(BinNode<E> *root, E *arr, int idx) const;
     int preorderhelp(BinNode<E> *root, E *arr, int idx) const;
     int inorderhelp(BinNode<E> *root, E *arr, int idx) const;
+    BinNode<E> *clone(BinNode<E> *node)
+    {
+        if (node == NULL)
+            return NULL;
+        nodecount++;
+        BinNode<E> *cloneNode = new BinNode<E>(node->element(), clone(node->left()), clone(node->right()));
+        return cloneNode;
+    }
+    LBinTree(LBinTree<E> &tree)
+    {
+        this->root = clone(tree->root);
+    }
 
 public:
     // Constructor
