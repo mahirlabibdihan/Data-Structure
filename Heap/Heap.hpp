@@ -28,16 +28,27 @@ public:
     // virtual E remove(int pos) = 0;
 };
 template <typename E, typename Comp>
-ostream &operator<<(ostream &os, Heap<E, Comp> *pq)
+void eraseKthSmallest(Heap<E, Comp> *h, int k)
 {
-    if (pq->size() == 0)
+    if (k <= h->size() && k > 0)
+    {
+        E tmp = h->removeFirst();
+        eraseKthSmallest(h, k - 1);
+        if (k > 1)
+            h->insert(tmp);
+    }
+}
+template <typename E, typename Comp>
+ostream &operator<<(ostream &os, Heap<E, Comp> h)
+{
+    if (h->size() == 0)
     {
         return os;
     }
-    E key = pq->removeFirst();
+    E key = h->removeFirst();
     os << key << " ";
-    os << pq;
-    pq->insert(key);
+    os << h;
+    h->insert(key);
     return os;
 }
 #endif

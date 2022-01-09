@@ -1,6 +1,7 @@
 #ifndef __GRAPH__
 #define __GRAPH__
 #include "../Queue/LQueue.hpp"
+#include "../List/List.hpp"
 #define Assert(val, s)                             \
     if (!(val))                                    \
     {                                              \
@@ -49,6 +50,13 @@ public:
     virtual int getMark(int v) = 0;
     virtual void setMark(int v, int val) = 0;
 };
+void resetMark(Graph *G)
+{
+    for (int i = 0; i < G->n(); i++)
+    {
+        G->setMark(i, UNVISITED);
+    }
+}
 void DFS(Graph *G, int v)
 { // Depth first search
     // PreVisit(G, v); // Take appropriate action
@@ -62,25 +70,79 @@ void DFS(Graph *G, int v)
     }
     // PostVisit(G, v); // Take appropriate action
 }
-void BFS(Graph *G, int start, Queue<int> *Q)
+void BFS(Graph *G, int start, Queue<int> *q)
 {
-    Q->enqueue(start); // Initialize Q
+    q->enqueue(start); // Initialize Q
     G->setMark(start, VISITED);
-    while (Q->length() != 0)
+    while (q->length() != 0)
     { // Process all vertices on Q
         int v, w;
-        v = Q->dequeue();
+        v = q->dequeue();
         // PreVisit(G, v); // Take appropriate action
         for (w = G->first(v); w < G->n(); w = G->next(v, w))
         {
             if (G->getMark(w) == UNVISITED)
             {
                 G->setMark(w, VISITED);
-                Q->enqueue(w);
+                q->enqueue(w);
             }
         }
     }
 }
+List<int> *rootForMinimumHeight(Graph *G, Queue<int> *q, List<int> *degree)
+{
+    //  first enqueue all leaf nodes in queue
+    int V = G->n();
+    for (int i = 0; i < V; i++)
+    {
+        degree->moveToPos(i);
+        if (degree->getValue() == 1)
+        {
+            G->setMark(i, VISITED);
+            q->enqueue(i);
+        }
+    }
+
+    //  loop until total vertex remains less than 2
+    while (V > 2)
+    {
+        int popEle = q->length();
+        V -= popEle; // popEle number of vertices will be popped
+
+        for (int i = 0; i < popEle; i++)
+        {
+            int v, w;
+            v = q->dequeue();
+
+            // for each neighbour, decrease its degree and
+            // if it become leaf, insert into queue
+            for (w = G->first(v); w < G->n(); w = G->next(v, w))
+            {
+                if (G->getMark(w) == UNVISITED)
+                {
+                    degree->moveToPos(w);
+                    int tmp = degree->getValue() - 1;
+                    degree->remove();
+                    degree->insert(tmp);
+                    if (degree->getValue() == 1)
+                    {
+                        q->enqueue(w);
+                        G->setMark(w, VISITED);
+                    }
+                }
+            }
+        }
+    }
+
+    //  copying the result from queue to result vector
+    List<int> *res; /// NEED TO ALLOCATE MEMORY
+    while (q->length() > 0)
+    {
+        res->append(q->dequeue());
+    }
+    return res;
+}
+
 ostream &operator<<(ostream &os, Graph *g)
 {
     for (int i = 0; i < g->n(); i++)

@@ -11,6 +11,10 @@ class ACompleteBinTree : public ABinTree<E>
     int postorderhelp(int pos, E *arr, int idx) const;
     int preorderhelp(int pos, E *arr, int idx) const;
     int inorderhelp(int pos, E *arr, int idx) const;
+    bool isLeaf(int pos) const // True if pos is a leaf
+    {
+        return (pos >= n / 2) && (pos < n);
+    }
 
 public:
     ACompleteBinTree(int max = ABinTree<E>::defaultSize) : ABinTree<E>::ABinTree(max)
@@ -30,17 +34,6 @@ public:
         else
             printhelp(0);
         cout << endl;
-    }
-    // Insert "it" into the heap
-    void insert(const E &it)
-    {
-        if (this->n == this->maxSize)
-        {
-            cout << "Tree is full" << endl;
-            return;
-        }
-        this->n++;
-        this->tree[this->n - 1] = it; // Start at end of heap
     }
     // Inorder traversal - left->root->right.
     E *inorder() const

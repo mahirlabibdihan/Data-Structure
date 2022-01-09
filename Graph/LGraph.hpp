@@ -3,6 +3,7 @@
 #include "Graph.hpp"
 #include "../List/SLList.hpp"
 #include "../List/DLList.hpp"
+#include "../List/AList.hpp"
 #include "Edge.hpp"
 class LGraph : public Graph
 {
@@ -37,7 +38,9 @@ public:
         vertex = new List<Edge> *[numVertex];
         for (i = 0; i < numVertex; i++)
         {
-            vertex[i] = new DLList<Edge>();
+            // vertex[i] = new DLList<Edge>();
+            // vertex[i] = new SLList<Edge>();
+            vertex[i] = new AList<Edge>();
         }
     }
     int n() { return numVertex; } // Number of vertices
@@ -69,13 +72,15 @@ public:
     void setEdge(int u, int v, int weight = 1)
     {
         Assert(weight > 0, "May not set weight to 0");
-        Edge currEdge(v, weight);
         if (isEdge(u, v))
         { // Edge already exists in graph
+            // in isEdge() the curr position is set to where v is.
+            // So, if we call remove(), it will delete v
             vertex[u]->remove();
         }
         else
-        { // Keep neighbors sorted by vertex index
+        { // Keep neighbors sorted by vertex index: Optional
+            // If we want we can just append the new edge
             numEdge++;
             for (vertex[u]->moveToStart(); vertex[u]->currPos() < vertex[u]->length(); vertex[u]->next())
             {
@@ -90,7 +95,7 @@ public:
                 }
             }
         }
-        vertex[u]->insert(currEdge);
+        vertex[u]->insert(Edge(v, weight));
     }
     void delEdge(int u, int v)
     { // Delete edge (i, j)
@@ -100,6 +105,7 @@ public:
             numEdge--;
         }
     }
+    // If (u,v) is an edge, this method sets curr position vertex[u], to the position of v
     bool isEdge(int u, int v)
     { // Is (u,v) an edge?
         for (vertex[u]->moveToStart(); vertex[u]->currPos() < vertex[u]->length(); vertex[u]->next())

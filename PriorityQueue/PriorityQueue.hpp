@@ -1,3 +1,5 @@
+#ifndef __PRIORITY_QUEUE__
+#define __PRIORITY_QUEUE__
 #include <iostream>
 #include <climits>
 #include "../Heap/AHeap.hpp"
@@ -96,16 +98,4 @@ ostream &operator<<(ostream &os, PriorityQueue<E, Comp> *pq)
     pq->insertKey(key);
     return os;
 }
-template <typename E, typename Comp>
-ostream &operator<<(ostream &os, PriorityQueue<E, Comp> pq)
-{
-    if (pq.size() == 0)
-    {
-        return os;
-    }
-    E key = pq.removeFirst();
-    os << key << " ";
-    os << pq;
-    pq.insertKey(key);
-    return os;
-}
+#endif

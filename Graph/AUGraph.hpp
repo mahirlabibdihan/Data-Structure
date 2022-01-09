@@ -1,19 +1,36 @@
-#ifndef __A_GRAPH__
-#define __A_GRAPH__
+// Optimized Undirected Graph
+// Lower triangular Matrix
+/*
+Graph:
+5
+1 2
+3 4
+5 2
+1 5
+Representation:
+  1 2 3 4 5
+1 0
+2 1 0
+3 0 0 0
+4 0 0 1 0
+5 0 1 0 0 1
+*/
+#ifndef __A_U_GRAPH__
+#define __A_U_GRAPH__
 #include "Graph.hpp"
 // Implementation for the adjacency matrix representation
-class AGraph : public Graph
+class AUGraph : public Graph
 {
 private:
     int numVertex, numEdge; // Store number of vertices, edges
     int **matrix;           // Pointer to adjacency matrix
     int *mark;              // Pointer to mark array
 public:
-    AGraph(int numVert) // Constructor
+    AUGraph(int numVert) // Constructor
     {
         init(numVert);
     }
-    ~AGraph()
+    ~AUGraph()
     {                  // Destructor
         delete[] mark; // Return dynamically allocated memory
         for (int i = 0; i < numVertex; i++)
@@ -35,11 +52,11 @@ public:
         matrix = (int **)new int *[numVertex]; // Make matrix
         for (i = 0; i < numVertex; i++)
         {
-            matrix[i] = new int[numVertex];
+            matrix[i] = new int[i + 1];
         }
         for (i = 0; i < numVertex; i++) // Initialize to 0 weights
         {
-            for (int j = 0; j < numVertex; j++)
+            for (int j = 0; j <= i; j++)
             {
                 matrix[i][j] = 0;
             }
@@ -52,7 +69,7 @@ public:
     {
         for (int i = 0; i < numVertex; i++)
         {
-            if (matrix[v][i] != 0)
+            if (matrix[max(v, i)][min(v, i)] != 0)
             {
                 return i;
             }
@@ -64,7 +81,7 @@ public:
     {
         for (int i = w + 1; i < numVertex; i++)
         {
-            if (matrix[v][i] != 0)
+            if (matrix[max(v, i)][min(v, i)] != 0)
             {
                 return i;
             }
@@ -79,7 +96,7 @@ public:
         {
             numEdge++;
         }
-        matrix[v1][v2] = wt;
+        matrix[max(v1, v2)][min(v1, v2)] = wt;
     }
     void delEdge(int v1, int v2)
     { // Delete edge (v1, v2)
@@ -87,13 +104,13 @@ public:
         {
             numEdge--;
         }
-        matrix[v1][v2] = 0;
+        matrix[max(v1, v2)][min(v1, v2)] = 0;
     }
     bool isEdge(int i, int j) // Is (i, j) an edge?
     {
-        return matrix[i][j] != 0;
+        return matrix[max(i, j)][min(i, j)] != 0;
     }
-    int weight(int v1, int v2) { return matrix[v1][v2]; }
+    int weight(int v1, int v2) { return matrix[max(v1, v2)][min(v1, v2)]; }
     int getMark(int v) { return mark[v]; }
     void setMark(int v, int val) { mark[v] = val; }
 };

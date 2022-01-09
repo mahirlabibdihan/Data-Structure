@@ -27,22 +27,15 @@ protected:
         BinNode<E> *left = root->left();   //left child
         BinNode<E> *right = root->right(); //right child
         // If left child is larger than root
-        if (left != NULL)
+        if (left != NULL && Comp::prior(left->element(), largest->element()))
         {
-            if (Comp::prior(left->element(), largest->element()))
-            {
-                largest = left;
-            }
+            largest = left;
         }
         // If right child is larger than largest so far
-        if (right != NULL)
+        if (right != NULL && Comp::prior(right->element(), largest->element()))
         {
-            if (Comp::prior(right->element(), largest->element()))
-            {
-                largest = right;
-            }
+            largest = right;
         }
-
         if (largest != root) // If largest is not root, then it will go down
         {
             // Swap
@@ -194,10 +187,11 @@ template <typename E, typename Comp>
 void heapsort(E A[], int n)
 {                                                   // Heapsort
     Heap<E, Comp> *H = new LHeap<E, Comp>(A, n, n); // Build the heap
-    for (int i = 0; i < n; i++)                     // Now sort
+    for (int i = n - 1; i >= 0; i--)                // Now sort
     {
-        A[n - i - 1] = H->removeFirst(); // Place maxval at end
+        A[i] = H->removeFirst(); // Place maxval at end
     }
+    delete H;
 }
 #endif
 #endif

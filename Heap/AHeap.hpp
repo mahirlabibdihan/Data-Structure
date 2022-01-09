@@ -1,6 +1,16 @@
 #ifndef __A_HEAP__
 #define __A_HEAP__
 #include "Heap.hpp"
+#include <queue>
+#include <vector>
+using namespace std;
+/*
+If we start indexing from 1 instead of 0.
+Left Child = 2*i = i<<2
+Right Child = 2*i+1 = i<<2|1
+Parent = i/2 = i>>2
+n/2<i<n -> leaf
+*/
 // heapArray class
 template <typename E, typename Comp>
 class AHeap : public Heap<E, Comp>
@@ -11,26 +21,34 @@ protected:
     int maxSize; // Maximum size of the heapArray
     int n;       // Number of elements now in the heapArray
     // Helper function to put element in its correct place
+    // O(logh)
     void shiftDown(int pos)
     {
         while (!isLeaf(pos))
         { // Stop if pos is a leaf
-            int j = leftChild(pos);
+            int largest = pos;
+            int lc = leftChild(pos);
             int rc = rightChild(pos);
-            if ((rc < n) && Comp::prior(heapArray[rc], heapArray[j]))
-                j = rc; // Set j to greater child’s value
-            if (Comp::prior(heapArray[pos], heapArray[j]))
-                return; // Done
-            swap(heapArray[pos], heapArray[j]);
-            pos = j; // Move down
+            if ((lc < n) && Comp::prior(heapArray[lc], heapArray[largest]))
+            {
+                largest = lc; // Set lc to greater child’s value
+            }
+            if ((rc < n) && Comp::prior(heapArray[rc], heapArray[largest]))
+            {
+                largest = rc; // Set rc to greater child’s value
+            }
+            if (largest == pos)
+                return;
+            swap(heapArray[pos], heapArray[largest]); // Swap with child
+            pos = largest;                            // Move down
         }
     }
     void shiftUp(int pos)
     {
         while (pos != 0 && Comp::prior(heapArray[pos], heapArray[parent(pos)]))
         {
-            swap(heapArray[pos], heapArray[parent(pos)]);
-            pos = parent(pos); // Move down
+            swap(heapArray[pos], heapArray[parent(pos)]); // Swap with parent
+            pos = parent(pos);                            // Move up
         }
     }
     bool isLeaf(int pos) const // True if pos is a leaf
@@ -52,7 +70,7 @@ protected:
     void expand()
     {
         E *temp = new E[2 * maxSize];
-        for (int i = 0; i < 2 * maxSize; i++)
+        for (int i = 0; i < maxSize; i++)
         {
             temp[i] = heapArray[i];
         }
@@ -75,10 +93,15 @@ public:
         maxSize = max;
         buildHeap();
     }
+    ~AHeap()
+    {
+        delete[] heapArray;
+    }
     int size() const // Return current heapArray size
     {
         return n;
     }
+    // O(n)->Tighter Bound
     void buildHeap() // Heapify contents of heapArray
     {
         for (int i = n / 2 - 1; i >= 0; i--)
@@ -98,7 +121,7 @@ public:
         // Now sift up until curr’s parent > curr
         shiftUp(n - 1);
     }
-    // Remove first value
+    // Remove first value: O(logn)
     E removeFirst()
     {
         Assert(n > 0, "Heap is empty");
@@ -152,9 +175,9 @@ public:
             // In next step, it will be either shiftUp or shiftDown.
             // Only one operation will be executed
             // Percolation
-            shiftUp(pos);
             if (n != 0)
             {
+                shiftUp(pos);   // Push up large key
                 shiftDown(pos); // Push down small key
             }
         }
@@ -165,12 +188,16 @@ public:
 #define __HEAP_SORT__
 template <typename E, typename Comp>
 void heapsort(E A[], int n)
-{                                                   // Heapsort
+{
+    // O(n)                                       // Heapsort
     Heap<E, Comp> *H = new AHeap<E, Comp>(A, n, n); // Build the heapArray
-    for (int i = 0; i < n; i++)                     // Now sort
+    // O(nlogn)
+    for (int i = n - 1; i >= 0; i--) // Now sort
     {
-        A[n - i - 1] = H->removeFirst(); // Place maxval at end
+        // O(logn)
+        A[i] = H->removeFirst(); // Place maxval at end
     }
+    delete H;
 }
 #endif
 #endif

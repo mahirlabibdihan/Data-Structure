@@ -1,5 +1,7 @@
 #ifndef __LIST__
 #define __LIST__
+#include <iostream>
+using namespace std;
 #define Assert(val, s)                             \
     if (!(val))                                    \
     {                                              \
@@ -28,6 +30,13 @@ public:
     virtual void moveToPos(int pos) = 0;
     virtual const E &getValue() const = 0;
 };
+template <typename E>
+void replace(List<E> *lst, int pos, const E &item)
+{
+    lst->moveToPos(pos);
+    lst->remove();
+    lst->insert(item);
+}
 template <typename E>
 int find(List<E> *lst, const E &item)
 {

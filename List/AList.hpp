@@ -60,6 +60,7 @@ public:
         listSize = curr = 0;
         listArray = new E[defaultSize];
     }
+    // O(n)
     void insert(const E &it)
     { // Insert "it" at current position
         if (listSize == maxSize)
@@ -75,6 +76,7 @@ public:
         listArray[curr] = it;
         listSize++; // Increment list size
     }
+    // O(1)
     void append(const E &it)
     { // Append "it"
         if (listSize == maxSize)
@@ -84,11 +86,12 @@ public:
         }
         listArray[listSize++] = it;
     }
-
+    // O(n)
     E remove()
     { // Remove and return the current element.
         Assert((curr >= 0) && (curr < listSize), "Empty list");
         E it = listArray[curr];
+        // Left Shifting all the elements after the removed element
         for (int i = curr; i < listSize - 1; i++)
         {
             listArray[i] = listArray[i + 1];

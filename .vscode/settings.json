@@ -11,6 +11,12 @@
     "xtree": "cpp",
     "iosfwd": "cpp",
     "xlocmon": "cpp",
-    "climits": "cpp"
+    "climits": "cpp",
+    "utility": "cpp",
+    "queue": "cpp",
+    "exception": "cpp",
+    "memory": "cpp",
+    "tuple": "cpp",
+    "xlocale": "cpp"
   }
 }

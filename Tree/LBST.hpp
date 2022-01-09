@@ -10,6 +10,53 @@ template <typename Key, typename E>
 class LBST : public LBinTree<E>
 {
 private:
+    BinNode<E> *eraseKthSmallest(BinNode<E> *root, int k)
+    {
+        // remove(kthSmallest(this->root, k)->element());
+        if (root == NULL) // Empty tree
+        {
+            return NULL;
+        }
+        // cout << root->element() << endl;
+        if (root->left() != NULL)
+        {
+            root->setLeft(eraseKthSmallest(root->left(), k));
+        }
+
+        k--;
+        if (k == 0)
+        {
+            // Found: remove it
+            BinNode<E> *temp = root;
+            if (root->left() == NULL && root->right() == NULL)
+            {
+                root = NULL; // No children, so point to NULL
+            }
+            else if (root->left() == NULL)
+            {
+                root = root->right(); // No left child,so point to right
+            }
+            else if (root->right() == NULL)
+            {
+                root = root->left(); // No right child,so point to left
+            }
+            else
+            {
+                temp = getMax(root->left()); // Inorder predecessor
+                ((BSTNode<Key, E> *)root)->setKey(((BSTNode<Key, E> *)temp)->key());
+                root->setElement(temp->element());
+                root->setLeft(deleteMax(root->left()));
+            }
+            delete temp;
+            this->nodecount--;
+            return root;
+        }
+        if (root->right() != NULL)
+        {
+            root->setRight(eraseKthSmallest(root->right(), k));
+        }
+        return root;
+    }
     BinNode<E> *inserthelp(BinNode<E> *root, const Key &k, const E &e);
     BinNode<E> *deleteMin(BinNode<E> *root);
     BinNode<E> *getMin(BinNode<E> *root) const;

@@ -82,6 +82,7 @@ public:
         }
         return i;
     }
+    // O(n)
     void moveToPos(int pos)
     { // Move down list to "pos" position
         if ((pos < 0) || (pos >= listSize))

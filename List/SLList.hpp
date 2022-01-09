@@ -46,16 +46,20 @@ public:
         }
         this->curr = this->curr->next;
     }
+    // O(1)
     void insert(const E &it)
     { // Insert "it" at current position
         this->curr->next = new SLink<E>(it, this->curr->next);
         this->listSize++;
     }
+
+    // O(1)
     void append(const E &it)
     { // Append "it" to list
         this->tail = this->tail->next = new SLink<E>(it);
         this->listSize++;
     }
+    //O(1)
     E remove()
     {
         // Remove and return current element
