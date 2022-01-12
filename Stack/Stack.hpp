@@ -33,4 +33,28 @@ public:
     virtual const T &topValue() const = 0;
     virtual void setDirection(int direction) = 0;
 };
+template <typename T>
+void print(ostream &os, Stack<T> *s)
+{
+    if (s->length() == 0)
+    {
+        return;
+    }
+    T tmp = s->pop();
+    print(os, s);
+    os << tmp;
+    //if (s->length() > 1)
+    {
+        os << ", ";
+    }
+    s->push(tmp);
+}
+template <typename T>
+ostream &operator<<(ostream &os, Stack<T> *s)
+{
+    os << "<";
+    print(os, s);
+    os << ">";
+    return os;
+}
 #endif

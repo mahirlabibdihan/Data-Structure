@@ -278,3 +278,12 @@ void sort(E arr[], int n)
     delete bst;
 }
 #endif
+LBST<int, int> *buildTree(int tree[], int n)
+{
+    LBST<int, int> *bst = new LBST<int, int>();
+    for (int i = 0; i < n; i++)
+    {
+        bst->insert(tree[i], i);
+    }
+    return bst;
+}

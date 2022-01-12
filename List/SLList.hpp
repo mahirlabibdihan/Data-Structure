@@ -105,5 +105,21 @@ public:
             this->prev();
         }
     }
+    E getMid()
+    {
+        Assert(this->head->next != NULL, "Empty List");
+        Link<E> *t1 = this->head->next;
+        Link<E> *t2 = this->head->next;
+        while (t2->next != NULL)
+        {
+            t2 = t2->next;
+            if (t2->next == NULL)
+            {
+                break;
+            }
+            t1 = t1->next;
+        }
+        return t1->element;
+    }
 };
 #endif

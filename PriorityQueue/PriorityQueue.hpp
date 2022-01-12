@@ -2,7 +2,7 @@
 #define __PRIORITY_QUEUE__
 #include <iostream>
 #include <climits>
-#include "../Heap/AHeap.hpp"
+#include "../Heap/AHeap0.hpp"
 using namespace std;
 // heapArray class
 template <typename E, typename Comp>

@@ -35,4 +35,33 @@ public:
     // Return: A copy of the front element.
     virtual const E &rearValue() const = 0;
 };
+template <typename E>
+ostream &operator<<(ostream &os, Queue<E> *q)
+{
+    os << "<";
+    for (int i = 0; i < q->length(); i++)
+    {
+        E tmp = q->dequeue();
+        os << tmp;
+        if (i < q->length())
+        {
+            os << ", ";
+        }
+        q->enqueue(tmp);
+    }
+    os << ">";
+    return os;
+}
+
+template <typename E>
+void reverse(Queue<E> *q)
+{
+    if (q->length() == 0)
+    {
+        return;
+    }
+    int tmp = q->dequeue();
+    reverse(q);
+    q->enqueue(tmp);
+}
 #endif

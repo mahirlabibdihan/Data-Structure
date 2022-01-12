@@ -30,12 +30,12 @@ protected:
     }
     int leftSibling(int pos)
     {
-        Assert(r % 2 == 0, "No right left sibling");
+        Assert(r % 2 == 0, "No left sibling");
         return pos - 1;
     }
     int rightSibling(int pos)
     {
-        Assert(r % 2 != 0, "No right left sibling");
+        Assert(r % 2 != 0, "No right sibling");
         return pos + 1;
     }
 
