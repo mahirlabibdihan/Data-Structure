@@ -42,11 +42,11 @@ void print(ostream &os, Stack<T> *s)
     }
     T tmp = s->pop();
     print(os, s);
-    os << tmp;
-    //if (s->length() > 1)
+    if (s->length() > 0)
     {
         os << ", ";
     }
+    os << tmp;
     s->push(tmp);
 }
 template <typename T>

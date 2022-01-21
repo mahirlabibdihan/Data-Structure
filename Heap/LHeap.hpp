@@ -180,6 +180,11 @@ public:
         this->nodecount--;
         return tmp;
     }
+    E getFirst()
+    {
+        Assert(n > 0, "Heap is empty");
+        return root->element();
+    }
 };
 #ifndef __HEAP_SORT__
 #define __HEAP_SORT__

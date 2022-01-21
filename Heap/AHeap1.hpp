@@ -183,6 +183,11 @@ public:
         }
         return heapArray[n + 1]; // Return deleted value
     }
+    E getFirst()
+    {
+        Assert(n > 0, "Heap is empty");
+        return heapArray[1];
+    }
 };
 #ifndef __HEAP_SORT__
 #define __HEAP_SORT__

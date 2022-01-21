@@ -1,9 +1,14 @@
-#ifndef __A_HEAP__
-#define __A_HEAP__
-#include "Heap.hpp"
-#include <queue>
+#ifndef __HEAP__
+#define __HEAP__
+#include <iostream>
 #include <vector>
 using namespace std;
+#define Assert(val, s)                             \
+    if (!(val))                                    \
+    {                                              \
+        cout << "Assertion Failed: " << s << endl; \
+        exit(-1);                                  \
+    }
 /*
 If we start indexing from 1 instead of 0.
 Left Child = 2*i = i<<2
@@ -12,11 +17,10 @@ Parent = i/2 = i>>2
 n/2<i<n -> leaf
 */
 // heapArray class
-template <typename E, typename Comp>
-class AHeap : public Heap<E, Comp>
+class Heap
 {
 protected:
-    E *heapArray; // Pointer to the heapArray array
+    int *heapArray; // Pointer to the heapArray array
     static const int defaultSize = 10;
     int maxSize; // Maximum size of the heapArray
     int n;       // Number of elements now in the heapArray
@@ -29,23 +33,25 @@ protected:
             int largest = pos;
             int lc = leftChild(pos);
             int rc = rightChild(pos);
-            if ((lc < n) && Comp::prior(heapArray[lc], heapArray[largest]))
+            if ((lc < n) && (heapArray[lc] < heapArray[largest]))
             {
                 largest = lc; // Set lc to greater child’s value
             }
-            if ((rc < n) && Comp::prior(heapArray[rc], heapArray[largest]))
+            if ((rc < n) && (heapArray[rc] < heapArray[largest]))
             {
                 largest = rc; // Set rc to greater child’s value
             }
             if (largest == pos)
+            {
                 return;
+            }
             swap(heapArray[pos], heapArray[largest]); // Swap with child
             pos = largest;                            // Move down
         }
     }
     void shiftUp(int pos)
     {
-        while (pos != 0 && Comp::prior(heapArray[pos], heapArray[parent(pos)]))
+        while (pos != 0 && (heapArray[pos] < heapArray[parent(pos)]))
         {
             swap(heapArray[pos], heapArray[parent(pos)]); // Swap with parent
             pos = parent(pos);                            // Move up
@@ -69,7 +75,7 @@ protected:
     }
     void expand()
     {
-        E *temp = new E[2 * maxSize];
+        int *temp = new int[2 * maxSize];
         for (int i = 0; i < maxSize; i++)
         {
             temp[i] = heapArray[i];
@@ -78,22 +84,26 @@ protected:
         delete[] heapArray;
         heapArray = temp;
     }
-
+    void operator=(const Heap &) {} // Protect assignment
+    Heap(const Heap &) {}           // Protect copy constructor
 public:
-    AHeap(int max = defaultSize)
+    Heap(int max = defaultSize)
     {
         maxSize = max;
-        heapArray = new E[maxSize];
+        heapArray = new int[maxSize];
         n = 0;
     }
-    AHeap(E *h, int num, int max) // Constructor
+    Heap(vector<int> &v) // Constructor
     {
-        heapArray = h;
-        n = num;
-        maxSize = max;
+        maxSize = n = v.size();
+        heapArray = new int[maxSize];
+        for (int i = 0; i < n; i++)
+        {
+            heapArray[i] = v[i];
+        }
         buildHeap();
     }
-    ~AHeap()
+    ~Heap()
     {
         delete[] heapArray;
     }
@@ -110,7 +120,7 @@ public:
         }
     }
     // Insert "it" into the heapArray
-    void insert(const E &it)
+    void insert(const int &it)
     {
         if (n == maxSize)
         {
@@ -118,94 +128,47 @@ public:
         }
         n++;
         heapArray[n - 1] = it; // Start at end of heapArray
-        // Now sift up until curr’s parent > curr
-        if (n > 0)
+        // Now shift up until curr’s parent > curr
+        if (n > 1)
         {
             shiftUp(n - 1);
         }
     }
     // Remove first value: O(logn)
-    E removeFirst()
+    void deleteKey()
     {
-        Assert(n > 0, "Heap is empty");
+        if (n == 0)
+        {
+            cout << "Heap is empty";
+            return;
+        }
         swap(heapArray[0], heapArray[--n]); // Swap first with last value
         if (n > 0)
         {
             shiftDown(0); // shiftdown new root val
         }
-        return heapArray[n]; // Return deleted value
     }
-    E getFirst()
+    int getMin()
     {
         Assert(n > 0, "Heap is empty");
-        return heapArray[0];
-    }
-    // Remove and return element at specified position
-    /*
-    Case 1:
-                1
-            2       8
-          3   5  10  11
-        6
-    If we want to delete 10, we have to replace it with 6.
-                1
-            2       8
-          3   5   6   11
-    Since 6 is smaller than 8 we have to shift it up.
-                1
-            2       6
-          3   5   8   11
-
-    Case 2:
-                1
-            2       8
-          3   5  10  11
-        6
-    If we want to delete 2, we have to replace it with 6.
-                1
-            6       8
-          3   5  10   11
-    Since 6 is greater than 3 and 5 we have to shift it down.
-                1
-            3       8
-          6   5  10   11
-    */
-    E remove(int pos)
-    {
-        Assert((pos >= 0) && (pos < n), "Bad position");
-        if (pos == (n - 1))
-        {
-            n--; // Last element, no work to do
-        }
-        else
-        {
-            swap(heapArray[pos], heapArray[--n]); // Swap with last value
-            // In next step, it will be either shiftUp or shiftDown.
-            // Only one operation will be executed
-            // Percolation
-            if (n != 0)
-            {
-                shiftUp(pos);   // Push up large key
-                shiftDown(pos); // Push down small key
-            }
-        }
-        return heapArray[n];
+        return heapArray[0]; // Return deleted value
     }
 };
+#endif
 #ifndef __HEAP_SORT__
 #define __HEAP_SORT__
-template <typename E, typename Comp>
-void heapsort(E A[], int n)
+void heapsort(vector<int> &v)
 {
-    // O(n)                                       // Heapsort
-    Heap<E, Comp> *H = new AHeap<E, Comp>(A, n, n); // Build the heapArray
+    // O(n)
+    Heap *H = new Heap(v); // Build the heapArray
+    int n = v.size();      // Heapsort
     // O(nlogn)
-    for (int i = n - 1; i >= 0; i--) // Now sort
+    for (int i = 0; i < n; i++) // Now sort
     {
         // O(logn)
-        A[i] = H->removeFirst(); // Place maxval at end
+        v[i] = H->getMin(); // Place maxval at end
+        H->deleteKey();
     }
     delete H;
 }
-#endif
 #endif

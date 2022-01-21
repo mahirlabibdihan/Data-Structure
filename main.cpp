@@ -3,22 +3,20 @@
 #include "Tree/LBST.hpp"
 #include "Heap/AHeap0.hpp"
 #include "Queue/AQueue.hpp"
+#include "Stack/AStack.hpp"
 class Comp
 {
 public:
-    static bool prior(int a, int b)
+    static bool prior(const int &a, const int &b)
     {
         return a > b;
     }
 };
 int main()
 {
-    Queue<int> *q = new AQueue<int>();
-    q->enqueue(1);
-    q->enqueue(2);
-    q->enqueue(3);
-    q->enqueue(4);
-    cout << q << endl;
-    reverse(q);
-    cout << q << endl;
+    Stack<int> *s = new AStack<int>();
+    s->push(1123);
+    s->push(123);
+    s->push(23);
+    cout << s << endl;
 }

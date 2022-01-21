@@ -70,25 +70,7 @@ void DFS(Graph *G, int v)
     }
     // PostVisit(G, v); // Take appropriate action
 }
-void BFS(Graph *G, int start, Queue<int> *q)
-{
-    q->enqueue(start); // Initialize Q
-    G->setMark(start, VISITED);
-    while (q->length() != 0)
-    { // Process all vertices on Q
-        int v, w;
-        v = q->dequeue();
-        // PreVisit(G, v); // Take appropriate action
-        for (w = G->first(v); w < G->n(); w = G->next(v, w))
-        {
-            if (G->getMark(w) == UNVISITED)
-            {
-                G->setMark(w, VISITED);
-                q->enqueue(w);
-            }
-        }
-    }
-}
+
 List<int> *rootForMinimumHeight(Graph *G, Queue<int> *q, List<int> *degree)
 {
     //  first enqueue all leaf nodes in queue

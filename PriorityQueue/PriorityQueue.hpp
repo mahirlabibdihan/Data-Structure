@@ -67,7 +67,6 @@ public:
         Assert(pos != -1, "No such key");
         heapDeleteKey(pos);
     }
-
     const E &getMax()
     {
         Assert(this->n > 0, "AHeap is empty");
@@ -84,7 +83,6 @@ public:
         heapIncreaseKey(pos, newKey);
     }
 };
-
 template <typename E, typename Comp>
 ostream &operator<<(ostream &os, PriorityQueue<E, Comp> *pq)
 {

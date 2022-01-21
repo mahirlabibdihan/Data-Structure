@@ -24,18 +24,37 @@ public:
     virtual void insert(const E &it) = 0;
     // Remove first value
     virtual E removeFirst() = 0;
+    virtual E getFirst() = 0;
     // Remove and return element at specified position
     // virtual E remove(int pos) = 0;
 };
 template <typename E, typename Comp>
-void eraseKthSmallest(Heap<E, Comp> *h, int k)
+void removeKth(Heap<E, Comp> *h, int k)
 {
     if (k <= h->size() && k > 0)
     {
         E tmp = h->removeFirst();
-        eraseKthSmallest(h, k - 1);
+        removeKth(h, k - 1);
         if (k > 1)
             h->insert(tmp);
+    }
+}
+template <typename E, typename Comp>
+E getKth(Heap<E, Comp> *h, int k)
+{
+    if (k <= h->size())
+    {
+        if (k > 1)
+        {
+            E tmp = h->removeFirst();
+            E tmp2 = getKth(h, k - 1);
+            h->insert(tmp);
+            return tmp2;
+        }
+        else
+        {
+            return h->getFirst();
+        }
     }
 }
 template <typename E, typename Comp>
