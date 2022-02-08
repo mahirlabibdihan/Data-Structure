@@ -111,7 +111,7 @@ public:
         return matrix[max(i, j)][min(i, j)] != 0;
     }
     int weight(int v1, int v2) { return matrix[max(v1, v2)][min(v1, v2)]; }
-    int getMark(int v) { return mark[v]; }
-    void setMark(int v, int val) { mark[v] = val; }
+    bool getMark(int v) { return mark[v]; }
+    void setMark(int v, bool val) { mark[v] = val; }
 };
 #endif

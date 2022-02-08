@@ -135,7 +135,7 @@ public:
             return 0;
         }
     }
-    int getMark(int v) { return mark[v]; }
-    void setMark(int v, int val) { mark[v] = val; }
+    bool getMark(int v) { return mark[v]; }
+    void setMark(int v, bool val) { mark[v] = val; }
 };
 #endif

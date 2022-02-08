@@ -48,11 +48,11 @@ class Comparable
 public:
 	static bool prior(int a, int b)
 	{
-		return a > b;
+		return a < b;
 	}
 };
 
-#include "AHeap.hpp"
+#include "AHeap1.hpp"
 #include <iostream>
 using namespace std;
 int main()

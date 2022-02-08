@@ -8,8 +8,8 @@
         cout << "Assertion Failed: " << s << endl; \
         exit(-1);                                  \
     }
-#define VISITED 1
-#define UNVISITED 0
+#define VISITED true
+#define UNVISITED false
 // Graph abstract class. This ADT assumes that the number
 // of vertices is fixed when the graph is created.
 class Graph
@@ -47,8 +47,8 @@ public:
     // Get and Set the mark value for a vertex
     // v: The vertex
     // val: The value to set
-    virtual int getMark(int v) = 0;
-    virtual void setMark(int v, int val) = 0;
+    virtual bool getMark(int v) = 0;
+    virtual void setMark(int v, bool val) = 0;
 };
 void resetMark(Graph *G)
 {

@@ -94,7 +94,7 @@ public:
         return matrix[i][j] != 0;
     }
     int weight(int v1, int v2) { return matrix[v1][v2]; }
-    int getMark(int v) { return mark[v]; }
-    void setMark(int v, int val) { mark[v] = val; }
+    bool getMark(int v) { return mark[v]; }
+    void setMark(int v, bool val) { mark[v] = val; }
 };
 #endif
