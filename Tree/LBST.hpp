@@ -190,18 +190,12 @@ BinNode<E> *LBST<Key, E>::removehelp(BinNode<E> *root, const Key &k)
     if (k < ((BSTNode<Key, E> *)root)->key())
     {
         // 'k' is smaller than current key, so go left
-        if (root->left() != NULL) // To avoid extra call
-        {
-            root->setLeft(removehelp(root->left(), k)); // Check left
-        }
+        root->setLeft(removehelp(root->left(), k)); // Check left
     }
     else if (k > ((BSTNode<Key, E> *)root)->key())
     {
         // 'k' is greater than current key, so go right
-        if (root->right() != NULL) // To avoid extra call
-        {
-            root->setRight(removehelp(root->right(), k)); // Check right
-        }
+        root->setRight(removehelp(root->right(), k)); // Check right
     }
     else
     { // Found: remove it
@@ -232,6 +226,7 @@ BinNode<E> *LBST<Key, E>::removehelp(BinNode<E> *root, const Key &k)
             root->setElement(temp->element());
             // root->setRight(deleteMin(root->right()));
             root->setLeft(deleteMax(root->left()));
+            // removehelp(root->left(),temp->element()z)
         }
         delete temp; // Deallocating memory after removing node
     }

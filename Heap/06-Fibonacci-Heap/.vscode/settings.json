@@ -1,0 +1,19 @@
+{
+  "files.associations": {
+    "*.jsx": "javascriptreact",
+    "algorithm": "cpp",
+    "chrono": "cpp",
+    "limits": "cpp",
+    "utility": "cpp",
+    "queue": "cpp",
+    "ostream": "cpp",
+    "iostream": "cpp",
+    "deque": "cpp",
+    "exception": "cpp",
+    "fstream": "cpp",
+    "memory": "cpp",
+    "tuple": "cpp",
+    "vector": "cpp",
+    "xstring": "cpp"
+  }
+}

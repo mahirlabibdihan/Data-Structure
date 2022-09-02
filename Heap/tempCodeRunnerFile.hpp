@@ -1,2 +1,0 @@
-[rc], A[largest]))
-        {
