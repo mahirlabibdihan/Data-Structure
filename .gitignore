@@ -1,3 +1,5 @@
 *.exe
 *.in
 *.txt   
+*.cph
+*.vscode

@@ -3,6 +3,7 @@ Stack
 Queue
 Deque
 Tree
+BST
 Heap
 Priority Queue
 Graph
